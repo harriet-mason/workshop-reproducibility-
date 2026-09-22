@@ -1,0 +1,1124 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Reproducible Writing with Quarto",
+    "section": "",
+    "text": "Welcome",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#one-source-trustworthy-results-many-outputs",
+    "href": "index.html#one-source-trustworthy-results-many-outputs",
+    "title": "Reproducible Writing with Quarto",
+    "section": "One source, trustworthy results, many outputs",
+    "text": "One source, trustworthy results, many outputs\nIn this workshop you will build a small research manuscript in which the prose, analysis, figures, tables, and references live together. You will render it to HTML and PDF.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#by-the-end",
+    "href": "index.html#by-the-end",
+    "title": "Reproducible Writing with Quarto",
+    "section": "By the end",
+    "text": "By the end\nYou will be able to:\n\nexplain literate programming in practical terms;\nwrite structured prose in Markdown;\ncombine R code and narrative in a .qmd file;\nuse relative paths, citations, figures, tables, and cross-references;\nrender one source document to HTML and PDF\nstart your PhD thesis using the quarto template",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#what-you-will-make",
+    "href": "index.html#what-you-will-make",
+    "title": "Reproducible Writing with Quarto",
+    "section": "What you will make",
+    "text": "What you will make\nThe workshop project contains a short manuscript analysing a synthetic training study.\nThe data are synthetic, small, and stored inside the project. No network connection, account, or API key is required during the activities.\n\n\n\n\n\n\nImportantDownload before the workshop\n\n\n\n\nParticipant starter project\nCompleted project\n\nWork from the starter project. Keep the completed project closed unless you need to recover from a missed step or want to compare your result at the end.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#illustrative-running-order",
+    "href": "index.html#illustrative-running-order",
+    "title": "Reproducible Writing with Quarto",
+    "section": "Illustrative running order",
+    "text": "Illustrative running order\nThe detailed chapters are also designed to work as a reference after the workshop. They contain more examples than need to be demonstrated live, so the facilitator can select material and adjust the timings for the group.\n\n\n\n\n\n\n\n\nTime\nTopic\nProduct\n\n\n\n\n00:00–00:15\nSetup checkpoint\nFirst successful render\n\n\n00:15–00:30\nReproducible writing\nProject map\n\n\n00:30–00:50\nMarkdown\nStructured manuscript\n\n\n0:50–01:05\nBreak\n\n\n\n01:05–01:35\nComputation\nLive figure, table, and inline result\n\n\n01:35–02:00\nResearch publishing\nHTML, PDF, and journal-format demo",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-book",
+    "href": "index.html#how-to-use-this-book",
+    "title": "Reproducible Writing with Quarto",
+    "section": "How to use this book",
+    "text": "How to use this book\nKeep the book open beside your editor. Green Try it boxes are the main hands-on path. Yellow Checkpoint boxes describe what should work before the room moves on. Purple Discussion boxes are brief pauses for interpretation. Blue If you finish early boxes are optional and can be skipped without affecting later exercises.\nThe main path assumes R. A compact Python/Jupyter translation is provided for later use.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#workshop-details",
+    "href": "index.html#workshop-details",
+    "title": "Reproducible Writing with Quarto",
+    "section": "Workshop details",
+    "text": "Workshop details\n\nInstitution: Monash University\nPresenter: Harriet Mason\nDate: today\nContact: harriet.mason1@monash.edu",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "prework.html",
+    "href": "prework.html",
+    "title": "1  Before the workshop",
+    "section": "",
+    "text": "1.1 Install the tools\nComplete this page before the session. The workshop starts from a working installation rather than spending teaching time on downloads.\nYou need:\nIf you do not already have TinyTeX, run this once in R:\nRestart your editor after installing Quarto or TinyTeX.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "prework.html#install-the-tools",
+    "href": "prework.html#install-the-tools",
+    "title": "1  Before the workshop",
+    "section": "",
+    "text": "Quarto 1.9 or later from quarto.org.\nR 4.3 or later from CRAN.\nAn editor with Quarto support: RStudio, Positron, or VS Code.\nA LaTeX installation for PDF. TinyTeX is the smallest supported route for most participants.\n\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "prework.html#prepare-the-project",
+    "href": "prework.html#prepare-the-project",
+    "title": "1  Before the workshop",
+    "section": "1.2 Prepare the project",
+    "text": "1.2 Prepare the project\n\nDownload the starter project.\nExtract it to a short, writable path.\nOpen the extracted folder as an RStudio/Positron/VS Code project or workspace.\nOpen a terminal inside that folder.\n\nDo not work inside the zip file, a mail attachment preview, or a temporary downloads viewer.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "prework.html#install-the-r-packages",
+    "href": "prework.html#install-the-r-packages",
+    "title": "1  Before the workshop",
+    "section": "1.3 Install the R packages",
+    "text": "1.3 Install the R packages\nFrom the project terminal, run:\nRscript setup.R\nThis installs only packages that are missing: knitr, rmarkdown, readr, dplyr, and ggplot2.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "prework.html#run-the-preflight",
+    "href": "prework.html#run-the-preflight",
+    "title": "1  Before the workshop",
+    "section": "1.4 Run the preflight",
+    "text": "1.4 Run the preflight\nRscript preflight.R\nThe check reports:\n\nQuarto and R versions;\nrequired R packages;\na detected LaTeX engine; and\nwhether a tiny HTML and PDF document can render.\n\n\n1.4.1 Checkpoint before arrival\nThe final line reads Preflight passed. If HTML works but PDF fails, follow the PDF troubleshooting steps before the workshop.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "prework.html#make-the-first-render",
+    "href": "prework.html#make-the-first-render",
+    "title": "1  Before the workshop",
+    "section": "1.5 Make the first render",
+    "text": "1.5 Make the first render\nquarto render manuscript.qmd --to html\nOpen manuscript.html. It will be incomplete—that is intentional—but it should contain a title, introduction, and activity placeholders.\n\n\n\n\n\n\nNote\n\n\n\nYou can use your editor’s Render button instead of the terminal. The workshop shows terminal commands because they behave consistently across editors.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "prework.html#bring-on-the-day",
+    "href": "prework.html#bring-on-the-day",
+    "title": "1  Before the workshop",
+    "section": "1.6 Bring on the day",
+    "text": "1.6 Bring on the day\n\nthe extracted starter project;\nthe completed preflight result; and\nyour laptop and power adapter",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Before the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html",
+    "href": "reproducible-writing.html",
+    "title": "2  Reproducible writing",
+    "section": "",
+    "text": "2.1 A familiar handoff\nReproducible writing is the practice of keeping claims, calculations, figures, tables, and their sources connected closely enough that the document can be rebuilt and checked. Quarto provides the machinery; good project habits make the machinery portable.\nMost researchers have either received a project like this or created one under deadline pressure. Reproducible writing tries to make the handoff instead:\nThat is a much smaller and testable process.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#a-familiar-handoff",
+    "href": "reproducible-writing.html#a-familiar-handoff",
+    "title": "2  Reproducible writing",
+    "section": "",
+    "text": "“It works on my computer”\nA colleague sends you a folder called final_analysis_revised_3. Their email says:\n\nOpen analysis.R, change the first setwd() line to wherever you saved the folder, run lines 1–287, ignore the warnings, then open paper.docx. Figure 2 should match the plot in the figures-old folder, except the number in the Results section was updated manually.\n\nBefore checking the research, you must reconstruct the colleague’s computer: their folders, execution order, interactive objects, package versions, and copy-and-paste history. Even if every statistical command is correct, the handoff is fragile.\n\n\n1. Open the project folder.\n2. Install the documented requirements.\n3. Render manuscript.qmd.\n4. Inspect the source, output, and any reported differences.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#source-process-and-output",
+    "href": "reproducible-writing.html#source-process-and-output",
+    "title": "2  Reproducible writing",
+    "section": "2.2 Source, process, and output",
+    "text": "2.2 Source, process, and output\nLiterate programming places human explanation and executable instructions in one source document (Knuth 1984). Quarto coordinates the rendering process:\nsource data + .qmd + software environment\n                    |\n                 render\n                    |\n          HTML / PDF / Word / slides / tutorials\nThe rendered PDF is not the reproducible object by itself. It is evidence that a particular source was rendered in a particular environment. The useful object to share is the project that can recreate it.\nThis changes the role of common files:\n\n\n\n\n\n\n\n\nFile\nRole\nUsually edited by\n\n\n\n\ndata/training-study.csv\nInput\nData producer or documented cleaning step\n\n\nmanuscript.qmd\nNarrative and analysis instructions\nAuthor\n\n\nbibliography.bib\nCitation metadata\nAuthor/reference manager\n\n\nmanuscript.html\nRendered product\nQuarto\n\n\nmanuscript.pdf\nRendered product\nQuarto and LaTeX\n\n\n\nIf a rendered product looks wrong, repair the source or process and render again. Editing the product directly creates an undocumented fork.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#sec-absolute-paths",
+    "href": "reproducible-writing.html#sec-absolute-paths",
+    "title": "2  Reproducible writing",
+    "section": "2.3 Why absolute paths fail",
+    "text": "2.3 Why absolute paths fail\nAn absolute path starts from a computer-specific root:\n# macOS\nreadr::read_csv(\"/Users/alex/Desktop/project/data/results.csv\")\n\n# Windows\nreadr::read_csv(\"C:/Users/alex/OneDrive - University/project/data/results.csv\")\n\n# Linux or a research server\nreadr::read_csv(\"/home/alex/projects/project/data/results.csv\")\nThe path may be correct today, but it encodes facts that are not properties of the research:\n\nthe operating system;\nthe author’s username;\nthe name of a university or cloud-storage service;\nwhere the author happened to save the project;\nwhich drive or network mount was available; and\nsometimes confidential project, client, or participant names.\n\nWhen someone else receives the project, at least one of those facts changes. The code fails before it reaches the analysis.\n\n2.3.1 The same author can still break it\nAbsolute paths are not only a collaboration problem. They fail when you:\n\nmove the project from Downloads to Documents;\nrename a parent folder;\nswitch from a desktop to a laptop;\nrestore from a backup;\nrun on a high-performance computer;\nchange institutions or cloud-storage accounts; or\nask an automated build service to render the document.\n\nAn absolute path is therefore a claim that this project will always live in this exact location on this exact kind of machine.\n\n\n2.3.2 setwd() moves the problem\nA common repair is:\nsetwd(\"/Users/alex/Desktop/project\")\nThe remaining paths may now look relative, but every collaborator still has to edit the script before it can run. Worse, setwd() changes global session state: later code depends on whether that line ran and what the working directory was beforehand.\nOpening a project establishes one shared root without hard-coding each user’s computer.\n\n\n2.3.3 Relative paths are the solution\nInside the workshop project, write:\nreadr::read_csv(\"data/training-study.csv\")\nThis path means:\n\nstart from the project root;\nenter the data folder; and\nopen training-study.csv.\n\nIt describes the relationship between files, which remains true when the whole project is moved.\n\n\n\n\n\n\n\nPath\nMeaning\n\n\n\n\ndata/file.csv\nA file below the project root\n\n\nfigures/result.png\nA generated or supplied figure folder\n\n\nscripts/clean.R\nA script below the root\n\n\n../shared/file.csv\nA file outside the project — portable only if that surrounding structure is also shared\n\n\n/data/file.csv\nAn absolute path from the filesystem root, not the project\n\n\n\n\n\n\n\n\n\nWarningRelative does not mean “any path without a username”\n\n\n\n../someone-elses-folder/data.csv is syntactically relative but still depends on a directory outside the shared project. Prefer keeping shareable inputs inside the project, or document and validate the external data location explicitly.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#the-project-root",
+    "href": "reproducible-writing.html#the-project-root",
+    "title": "2  Reproducible writing",
+    "section": "2.4 The project root",
+    "text": "2.4 The project root\nYour editor and Quarto need a stable answer to “relative to what?” For this workshop, the extracted folder containing _quarto.yml is the project root:\nquarto-workshop-starter/\n├── _quarto.yml\n├── manuscript.qmd\n├── bibliography.bib\n├── data/\n│   ├── training-study.csv\n│   └── README.md\n└── _extensions/\nOpen the folder, not just an isolated .qmd file. Run terminal commands from that folder. Quarto then has a consistent base for documents and resources.\nYou can see R’s current working directory with:\ngetwd()\nUse this for diagnosis, not as a value to copy into setwd().",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#separate-inputs-from-products",
+    "href": "reproducible-writing.html#separate-inputs-from-products",
+    "title": "2  Reproducible writing",
+    "section": "2.5 Separate inputs from products",
+    "text": "2.5 Separate inputs from products\nA project becomes easier to understand when its folders communicate intent:\nproject/\n├── data/          # original or documented inputs\n├── R/             # reusable functions, if the project grows\n├── figures/       # supplied figures; generated figures may be temporary\n├── manuscript.qmd # source\n├── bibliography.bib\n└── README.md      # how to reproduce the project\nUseful rules are:\n\ndo not overwrite raw inputs during analysis;\nderive cleaned variables in code;\ngive files stable, descriptive names;\nkeep secrets and confidential data out of distributable projects;\navoid folders named only old, new, final, or misc; and\nmake it obvious which files are sources and which are generated.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#four-layers-of-reproducibility",
+    "href": "reproducible-writing.html#four-layers-of-reproducibility",
+    "title": "2  Reproducible writing",
+    "section": "2.6 Four layers of reproducibility",
+    "text": "2.6 Four layers of reproducibility\nKeeping data and code together is necessary but not sufficient.\n\n2.6.1 1. Computational\nCan the recorded instructions recreate the values, figures, and tables?\nCommon failures include missing code, interactive objects, manual spreadsheet edits, and undocumented execution order.\n\n\n2.6.2 2. Environmental\nCan the instructions run with the available versions of R, packages, Quarto, LaTeX, and system libraries?\nThe workshop records sessionInfo(). Package lockfiles such as renv provide a stronger environment specification.\n\n\n2.6.3 3. Provenance\nCan a reader identify where data and external information came from, what was changed, and under what permissions?\nA mysterious final.csv is not made trustworthy merely by reading it with reproducible code.\n\n\n2.6.4 4. Narrative\nDo the prose, captions, and conclusions accurately describe the computations?\nCode can keep n = 40 synchronised with a dataset. It cannot decide whether a causal claim is justified. Reproducibility makes reasoning inspectable; it does not replace judgement.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#clean-sessions-expose-hidden-dependencies",
+    "href": "reproducible-writing.html#clean-sessions-expose-hidden-dependencies",
+    "title": "2  Reproducible writing",
+    "section": "2.7 Clean sessions expose hidden dependencies",
+    "text": "2.7 Clean sessions expose hidden dependencies\nSuppose you created study_clean interactively yesterday, then wrote:\nmean(study_clean$change)\nThe line works while that object remains in your Global Environment. It fails on a colleague’s computer because the document never creates study_clean.\nA clean render starts a new execution context and runs the document in order. This exposes:\n\nmissing package calls;\nobjects created only interactively;\nfiles read from the wrong location;\ndependence on a particular execution order; and\nvalues copied rather than calculated.\n\nThe failure is useful evidence about what the source has not yet documented.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#a-practical-handoff-contract",
+    "href": "reproducible-writing.html#a-practical-handoff-contract",
+    "title": "2  Reproducible writing",
+    "section": "2.8 A practical handoff contract",
+    "text": "2.8 A practical handoff contract\nBefore sharing a project, ask whether a colleague can answer:\n\nWhich file should I open first?\nWhere are the inputs, and may they be shared?\nWhich command recreates the outputs?\nWhich software and packages are required?\nWhich files should never be edited manually?\nWhat result should I see if the render succeeds?\n\nThe workshop’s README.md, setup.R, preflight.R, and .qmd sources provide those answers at a modest level. More complex projects may add a package lockfile, tests, workflow manager, or container.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "reproducible-writing.html#try-the-handoff-yourself",
+    "href": "reproducible-writing.html#try-the-handoff-yourself",
+    "title": "2  Reproducible writing",
+    "section": "2.9 Try the handoff yourself",
+    "text": "2.9 Try the handoff yourself\nOpen manuscript.qmd and data/training-study.csv.\n\nFind the code that reads the CSV.\nConfirm that the path contains no username or drive letter.\nMove a copy of the entire project folder to a different location.\nOpen the copied folder as a project and render the manuscript.\nMove only manuscript.qmd without its project and observe what is missing.\nExplain why the first move succeeds and the second is not a complete handoff.\n\n\n2.9.1 Checkpoint\nYou should be able to describe the project as a self-contained set of relationships between files—not as a folder that happens to work from one person’s Desktop.\n\nIn Chapter 3 we turn the narrative itself into structured, portable source. In Chapter 4 we make calculated values and outputs part of the same rendering process.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reproducible writing</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html",
+    "href": "markdown.html",
+    "title": "3  Writing in Markdown",
+    "section": "",
+    "text": "3.1 Source versus appearance\nMarkdown is plain text with punctuation that describes structure rather than appearance. You identify something as a heading, quotation, citation, or code expression; the output format decides how that structure should look.\nThat separation is what allows the same source to become a web page, PDF, Word document, book chapter, slide deck, or tutorial.\nIn a word processor, “make this 18-point bold” is a visual instruction. In Markdown, ## Methods says “this is a second-level heading.” Quarto can then:\nSemantic structure is both more reusable and more accessible than manual visual formatting.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#source-versus-appearance",
+    "href": "markdown.html#source-versus-appearance",
+    "title": "3  Writing in Markdown",
+    "section": "",
+    "text": "number it in a PDF;\nput it in an HTML table of contents;\nturn it into a slide boundary;\ninclude it in navigation; and\ngive it an address for cross-referencing.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#document-metadata",
+    "href": "markdown.html#document-metadata",
+    "title": "3  Writing in Markdown",
+    "section": "3.2 Document metadata",
+    "text": "3.2 Document metadata\nA Quarto document begins with YAML metadata between --- lines:\n---\ntitle: \"A reproducible analysis\"\nsubtitle: \"A synthetic training study\"\nauthor: \"A. Researcher\"\ndate: today\nbibliography: bibliography.bib\nformat:\n  html:\n    toc: true\n  pdf:\n    number-sections: true\n---\nThe YAML is configuration. It answers questions such as:\n\nWhat is the document called?\nWho wrote it?\nWhich bibliography should be used?\nWhich outputs should be created?\nWhich options differ between those outputs?\n\nIndentation defines nesting:\nformat:\n  html:             # belongs under format\n    toc: true       # belongs under html\n  pdf:              # also belongs under format\n    number-sections: true\nIf toc were aligned with format, it would have a different scope.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#headings-create-document-structure",
+    "href": "markdown.html#headings-create-document-structure",
+    "title": "3  Writing in Markdown",
+    "section": "3.3 Headings create document structure",
+    "text": "3.3 Headings create document structure\nUse one # for a level-one heading, two for level two, and so on:\n\n\nSource\n# Introduction\n\n## Background\n\n## Research question\n\n# Methods\n\n## Data\n\n## Analysis\n\n\nRendered structure\n1 Introduction\n  1.1 Background\n  1.2 Research question\n2 Methods\n  2.1 Data\n  2.2 Analysis\nThe precise numbering and typography come from the output format.\n\n\nDo not skip from # to ### simply because you prefer the smaller font. That creates a broken outline for navigation and assistive technology. Change the theme if the visual design needs adjustment (more on this later).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#sec-section-crossrefs",
+    "href": "markdown.html#sec-section-crossrefs",
+    "title": "3  Writing in Markdown",
+    "section": "3.4 Section numbering and cross-references",
+    "text": "3.4 Section numbering and cross-references\nTurn on numbering for an output:\nformat:\n  html:\n    number-sections: true\n  pdf:\n    number-sections: true\nGive a heading a stable identifier:\n## Statistical analysis {#sec-statistical-analysis}\nRefer to it with:\nThe model specification is described in @sec-statistical-analysis.\nQuarto writes “Section 3.2” or the appropriate number. If the section moves, the reference updates automatically.\n\n\nSource\n## Data preparation {#sec-data-preparation}\n\nMissing values were retained for descriptive checks.\n\n## Statistical analysis\n\nSee @sec-data-preparation before fitting the model.\n\n\nRendered idea\n\n3.1 Data preparation\nMissing values were retained for descriptive checks.\n3.2 Statistical analysis\nSee Section 3.1 before fitting the model.\n\n\n\nStable identifiers are better than writing “see the section above” or manually typing “Section 3.1”. Use short, descriptive, lowercase labels separated by hyphens.\nQuarto uses the same system for sections, figures, tables, equations, listings, and exercises:\n\n\n\nObject\nLabel prefix\nReference\n\n\n\n\nSection\nsec-\n@sec-methods\n\n\nFigure\nfig-\n@fig-change\n\n\nTable\ntbl-\n@tbl-summary\n\n\nEquation\neq-\n@eq-change\n\n\nListing\nlst-\n@lst-model",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#paragraphs-and-emphasis",
+    "href": "markdown.html#paragraphs-and-emphasis",
+    "title": "3  Writing in Markdown",
+    "section": "3.5 Paragraphs and emphasis",
+    "text": "3.5 Paragraphs and emphasis\nA blank line starts a new paragraph. A single line break in the source normally continues the same paragraph, allowing you to wrap source text without changing the rendered prose.\n\n\nSource\nThis is one paragraph even though the\nsource wraps across two lines.\n\nThis is a new paragraph with *emphasis*,\n**strong emphasis**, and `inline code`.\n\n\nRendered\nThis is one paragraph even though the source wraps across two lines.\nThis is a new paragraph with emphasis, strong emphasis, and inline code.\n\n\nUse emphasis to convey meaning, not to simulate headings. Backticks are useful for filenames, functions, variables, and short commands.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#lists",
+    "href": "markdown.html#lists",
+    "title": "3  Writing in Markdown",
+    "section": "3.6 Lists",
+    "text": "3.6 Lists\nUnordered lists use -; ordered lists use 1.. Markdown can number ordered lists automatically:\n\n\nSource\nThe analysis will:\n\n- read the source data;\n- derive the change score; and\n- produce a figure.\n\nThe reader should:\n\n1. open the project;\n1. render the manuscript;\n1. inspect the output.\n\n\nRendered\nThe analysis will:\n\nread the source data;\nderive the change score; and\nproduce a figure.\n\nThe reader should:\n\nopen the project;\nrender the manuscript;\ninspect the output.\n\n\n\nUsing 1. for every ordered item makes rearranging source easier. Use explicit numbers only when the source number itself matters.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#links-images-and-footnotes",
+    "href": "markdown.html#links-images-and-footnotes",
+    "title": "3  Writing in Markdown",
+    "section": "3.7 Links, images, and footnotes",
+    "text": "3.7 Links, images, and footnotes\n[Quarto documentation](https://quarto.org/docs/guide/)\n\n![A concise description of the image](images/result.png)\n\nThis claim needs a qualification.[^qualification]\n\n[^qualification]: The data are synthetic and illustrate workflow only.\nGood link text tells the reader where the link goes. Avoid “click here”.\nImage text inside ![...] becomes alternative text. Describe the information a reader needs, not merely the filename or “image of a graph”.\nFootnotes are appropriate for supplementary explanation. If information is central to interpreting the result, keep it in the main text.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#quotations-and-block-quotes",
+    "href": "markdown.html#quotations-and-block-quotes",
+    "title": "3  Writing in Markdown",
+    "section": "3.8 Quotations and block quotes",
+    "text": "3.8 Quotations and block quotes\nPrefix quoted paragraphs with &gt;:\n\n\nSource\n&gt; Reproducibility is a property of a\n&gt; workflow, not simply a file format.\n\n\nRendered\n\nReproducibility is a property of a workflow, not simply a file format.\n\n\n\nFor published words, include a citation and page or section locator where appropriate. Markdown syntax does not remove scholarly attribution requirements.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#callouts",
+    "href": "markdown.html#callouts",
+    "title": "3  Writing in Markdown",
+    "section": "3.9 Callouts",
+    "text": "3.9 Callouts\nCallouts separate warnings, definitions, tips, or assumptions from the main narrative:\n::: {.callout-warning}\nThe data are synthetic and must not be interpreted as evidence.\n:::\n\n\n\n\n\n\nWarning\n\n\n\nThe data are synthetic and must not be interpreted as evidence.\n\n\nCommon types are note, tip, important, warning, and caution. A callout should add meaning, not turn every paragraph into a coloured box.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#tables-written-in-markdown",
+    "href": "markdown.html#tables-written-in-markdown",
+    "title": "3  Writing in Markdown",
+    "section": "3.10 Tables written in Markdown",
+    "text": "3.10 Tables written in Markdown\nSmall, static tables can be written directly:\n\n\nSource\n| Format | Best suited to |\n|---|---|\n| HTML | Browsing and interaction |\n| PDF | Fixed-page distribution |\n| DOCX | Editorial workflows |\n\n\nRendered\n\n\n\nFormat\nBest suited to\n\n\n\n\nHTML\nBrowsing and interaction\n\n\nPDF\nFixed-page distribution\n\n\nDOCX\nEditorial workflows\n\n\n\n\n\nUse a code-generated table when values come from data. A hand-written Markdown table is appropriate for stable explanatory content such as option summaries.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#mathematics-and-numbered-equations",
+    "href": "markdown.html#mathematics-and-numbered-equations",
+    "title": "3  Writing in Markdown",
+    "section": "3.11 Mathematics and numbered equations",
+    "text": "3.11 Mathematics and numbered equations\nInline mathematics uses one pair of dollar signs:\nThe individual change is $\\Delta_i = y_{i1} - y_{i0}$.\nThe rendered result is: the individual change is Δi=yi1−yi0\\Delta_i = y_{i1} - y_{i0}.\nA display equation uses $$. Add a label inside braces for numbering and cross-referencing:\n$$\n\\bar{\\Delta}_g =\n\\frac{1}{n_g}\\sum_{i=1}^{n_g}\\Delta_i\n$$ {#eq-group-change}\n\nGroup means are defined in @eq-group-change.\nΔ‾g=1ng∑i=1ngΔi(3.1)\n\\bar{\\Delta}_g =\n\\frac{1}{n_g}\\sum_{i=1}^{n_g}\\Delta_i\n \\qquad(3.1)\nGroup means are defined in Equation 3.1.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#sec-citations",
+    "href": "markdown.html#sec-citations",
+    "title": "3  Writing in Markdown",
+    "section": "3.12 Citations and bibliographies",
+    "text": "3.12 Citations and bibliographies\nBibliographic records live in bibliography.bib. A record has a citation key:\n@article{knuth1984,\n  author = {Knuth, Donald E.},\n  title = {Literate Programming},\n  year = {1984}\n}\nUse the key in prose:\n\n\nSource\nLiterate programming was formalised by\n@knuth1984.\n\nReproducibility requires more than\nretaining code [@sandve2013].\n\n\nRendered\nLiterate programming was formalised by Knuth (1984).\nReproducibility requires more than retaining code (Sandve et al. 2013).\n\n\nQuarto formats the citation and builds the reference list. A Citation Style Language (.csl) file can change the style without rewriting citations.\nUseful citation patterns include:\n[@knuth1984]                 # parenthetical\n@knuth1984                  # textual author\n[@knuth1984, pp. 100–102]   # locator\n[@knuth1984; @sandve2013]   # multiple sources\nThe bibliography automates formatting, not source evaluation. Check names, titles, dates, identifiers, and whether the cited source supports the claim.\nProbably the easiest way to get bib keys is from Zotero and the Better BibTeX extension which can export the required format for a .bib file automatically.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "markdown.html#a-fuller-markdown-exercise",
+    "href": "markdown.html#a-fuller-markdown-exercise",
+    "title": "3  Writing in Markdown",
+    "section": "3.13 A fuller Markdown exercise",
+    "text": "3.13 A fuller Markdown exercise\nIn manuscript.qmd:\n\nComplete the title, subtitle, author, and output options in YAML.\nCreate Introduction, Methods, Results, Discussion, and References sections.\nAdd stable sec- identifiers to Methods and Results.\nRefer to Methods from the Results prose.\nAdd a research question, bulleted aims, and the numbered change-score equation.\nAdd one citation, one footnote, one link, and one warning callout.\nRender to HTML and inspect the table of contents, numbering, and references.\nRender to PDF and identify what changed visually and what remained semantically the same.\n\n\n3.13.1 Checkpoint\nThe source contains structure rather than manual styling. Headings appear in navigation, section and equation references update automatically, and citations are generated from the bibliography.\n\nChapter 4 applies the same source-to-output principle to calculated values, figures, and tables.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nSandve, Geir Kjetil, Anton Nekrutenko, James Taylor, and Eivind Hovig. 2013. “Ten Simple Rules for Reproducible Computational Research.” PLOS Computational Biology 9 (10): e1003285. https://doi.org/10.1371/journal.pcbi.1003285.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Writing in Markdown</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html",
+    "href": "computation.html",
+    "title": "4  Literate computation",
+    "section": "",
+    "text": "4.1 Anatomy of an R cell\nAn executable document contains three interleaved kinds of material:\nThe rendered document is a record of code executed in context, not a screenshot of an interactive session.\nAn executable R cell begins with ```{r} and ends with three backticks. Cell options sit at the top and begin with #|:\nWhen this book renders, that pattern produces a live demonstration:\nstudy |&gt;\n  count(group)\n\n# A tibble: 2 × 2\n  group            n\n  &lt;chr&gt;        &lt;int&gt;\n1 comparison      20\n2 intervention    20\nThe cell has:\nLabels should be unique, descriptive, and stable. Labels with reserved prefixes such as fig- and tbl- create cross-referenceable outputs.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#sec-chunk-anatomy",
+    "href": "computation.html#sec-chunk-anatomy",
+    "title": "4  Literate computation",
+    "section": "",
+    "text": "#| label: group-counts\n#| echo: true\n#| message: false\n\nstudy |&gt;\n  count(group)\n\n\n\n\nan engine (r);\na label (demo-group-counts);\nzero or more options;\nR code; and\noutput generated during rendering.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#the-execution-model",
+    "href": "computation.html#the-execution-model",
+    "title": "4  Literate computation",
+    "section": "4.2 The execution model",
+    "text": "4.2 The execution model\nFor an R-based .qmd, Quarto asks knitr to execute cells from top to bottom. Objects created in an earlier cell are available later in that render.\n# Cell 1\nstudy &lt;- readr::read_csv(\"data/training-study.csv\")\n\n# Cell 2: depends on Cell 1\nnrow(study)\nThis has several consequences:\n\nchanging cell order can change whether code works;\na document should create every object it uses;\npackages should be loaded or namespaced in the source;\ninteractive Global Environment objects are not reliable dependencies; and\nrestarting R before rendering is a useful test.\n\n\n4.2.1 A common hidden-state failure\nImagine running this interactively:\nstudy_with_change &lt;- study |&gt;\n  mutate(change = followup_score - baseline_score)\nYou then write a document cell containing only:\nmean(study_with_change$change)\nIt works until R is restarted. The document contains the result-producing line but not the instruction that creates its input. A clean render reveals the missing step.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#sec-cell-options",
+    "href": "computation.html#sec-cell-options",
+    "title": "4  Literate computation",
+    "section": "4.3 Cell options control execution and presentation",
+    "text": "4.3 Cell options control execution and presentation\nChunk options are not cosmetic trivia. They determine what runs, what readers see, what can be referenced, and how output is presented.\n\n4.3.1 Core execution and visibility options\n\n\n\n\n\n\n\n\n\n\nOption\nTypical value\nCode runs?\nCode shown?\nOutput shown?\n\n\n\n\neval\nfalse\nNo\nYes\nNo\n\n\necho\nfalse\nYes\nNo\nYes\n\n\noutput\nfalse\nYes\nYes\nNo\n\n\ninclude\nfalse\nYes\nNo\nNo\n\n\nwarning\nfalse\nYes\nAs configured\nWarnings hidden\n\n\nmessage\nfalse\nYes\nAs configured\nMessages hidden\n\n\nerror\ntrue\nYes\nAs configured\nError displayed; render continues\n\n\n\nThese options answer different questions:\n\nShould the code run? eval\nShould readers see the code? echo\nShould readers see its normal output? output\nShould anything from the cell appear? include\nHow should diagnostics be handled? warning, message, error\n\n\n\n4.3.2 Default: code and output\nUse the default when the calculation itself is part of the explanation:\n\nstudy |&gt;\n  summarise(\n    participants = n(),\n    mean_change = mean(change)\n  )\n\n# A tibble: 1 × 2\n  participants mean_change\n         &lt;int&gt;       &lt;dbl&gt;\n1           40        6.95\n\n\nThe reader can inspect the instructions and the result.\n\n\n4.3.3 echo: false: show the result, hide the implementation\nThis is common in a polished reader-facing report:\n\n\n# A tibble: 2 × 2\n  group            n\n  &lt;chr&gt;        &lt;int&gt;\n1 comparison      20\n2 intervention    20\n\n\nThe code still runs and remains in the .qmd source, but the rendered reader sees only the result. Hiding code is a presentation choice, not reproducibility by itself; the source must still be available to someone expected to audit it.\n\n\n4.3.4 eval: false: show an example without running it\n\n# An illustrative call that should not run during this render\ndownload.file(\"https://example.org/large-data.csv\", \"data/large-data.csv\")\n\nThis is useful for teaching installation commands, destructive examples, slow jobs, or code requiring credentials. Do not use it for code that supposedly created the reported result.\n\n\n4.3.5 output: false: run code, hide normal output\n\nsummary_table &lt;- study |&gt;\n  group_by(group) |&gt;\n  summarise(mean_change = mean(change), .groups = \"drop\")\n\nsummary_table\n\nThe object is created for later cells, and the code is visible, but the printed table is suppressed here.\n\n\n4.3.6 include: false: setup that remains out of the document\nThe first cell in this chapter loaded packages and data using:\n#| include: false\n\nlibrary(readr)\nlibrary(dplyr)\nlibrary(ggplot2)\nstudy &lt;- read_csv(\"materials/complete/data/training-study.csv\")\nThe code ran, but neither code nor output appeared. This is appropriate for routine setup. It is not a place to conceal analytically important decisions.\n\n\n4.3.7 Warnings and messages\nPackage startup messages rarely help a manuscript reader:\n#| message: false\n#| warning: false\nSuppress expected noise only after understanding it. A convergence warning, failed transformation, or removed observation may be evidence of an analysis problem. Fix or explain substantive warnings rather than hiding them globally.\n\n\n4.3.8 Folding rather than removing code\nHTML can keep code available without placing it in the main reading flow:\nformat:\n  html:\n    code-fold: true\n    code-summary: \"Show the R code\"\nThis affects HTML interaction. PDF cannot fold code, so decide separately whether code should be shown, hidden, or moved to an appendix.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#where-options-can-be-set",
+    "href": "computation.html#where-options-can-be-set",
+    "title": "4  Literate computation",
+    "section": "4.4 Where options can be set",
+    "text": "4.4 Where options can be set\nOptions can apply at three levels.\n\n4.4.1 Project level\nIn _quarto.yml:\nexecute:\n  warning: false\n  message: false\nUse project defaults for consistent policy across documents.\n\n\n4.4.2 Document level\nIn a document’s YAML:\n---\nexecute:\n  echo: true\n  warning: false\n---\nUse document defaults for the intended audience of that document.\n\n\n4.4.3 Cell level\n#| echo: false\n#| fig-width: 7\nCell options override broader defaults for one case. The practical precedence is:\nproject default &lt; document default &lt; cell option\nKeep exceptions local and intentional. If every cell repeats the same option, move it to document or project YAML.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#inline-computation",
+    "href": "computation.html#inline-computation",
+    "title": "4  Literate computation",
+    "section": "4.5 Inline computation",
+    "text": "4.5 Inline computation\nInline code places a calculated value inside a sentence. The source pattern is:\nThe study contains `r nrow(study)` participants.\nIn this rendered chapter, the live sentence is:\n\nThe study contains 40 participants.\n\nOther source examples include:\n\nThe mean change was `r round(mean(study$change), 1)` points.\nThere were `r dplyr::n_distinct(study$group)` study groups.\n\nUse short, readable expressions inline. If a calculation is complicated, create a clearly named object in a cell and insert only that object:\noverall_mean_change &lt;- mean(study$change)\nThe prose can then use:\nThe mean change was `r round(overall_mean_change, 1)` points.\nThis keeps prose readable and makes the calculation easier to test.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#sec-computational-figures",
+    "href": "computation.html#sec-computational-figures",
+    "title": "4  Literate computation",
+    "section": "4.6 Figures, options, and cross-references",
+    "text": "4.6 Figures, options, and cross-references\nA figure cell combines execution options with publication metadata:\n#| label: fig-change-demo\n#| fig-cap: \"Change score by training hours and study group.\"\n#| fig-alt: \"Scatterplot of training hours against change score...\"\n#| fig-width: 7\n#| fig-height: 4.5\n#| dpi: 300\n\nggplot(study, aes(training_hours, change, colour = group, shape = group)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE)\nThe live output is Figure 4.1:\n\nggplot(study, aes(training_hours, change, colour = group, shape = group)) +\n  geom_point(size = 2.5) +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  labs(\n    x = \"Training hours\",\n    y = \"Change in score\",\n    colour = \"Study group\",\n    shape = \"Study group\"\n  ) +\n  theme_minimal()\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\nFigure 4.1: Change score by training hours and study group.\n\n\n\n\n\nImportant figure options include:\n\n\n\nOption\nPurpose\n\n\n\n\nlabel: fig-name\nCreates a stable cross-reference target\n\n\nfig-cap\nVisible caption\n\n\nfig-alt\nAccessible description of information in the figure\n\n\nfig-width, fig-height\nSize of the plotting device in inches\n\n\ndpi\nRaster resolution\n\n\nfig-align\nAlignment in the output\n\n\nfig-show: hold\nHolds multiple plots from one cell together\n\n\n\nPlot dimensions affect the space in which the plot is drawn, not merely how a finished image is stretched. Text, facets, and legends may reflow when dimensions change.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#sec-computational-tables",
+    "href": "computation.html#sec-computational-tables",
+    "title": "4  Literate computation",
+    "section": "4.7 Tables and cross-references",
+    "text": "4.7 Tables and cross-references\nCreate the data object in code:\nThen present it with a caption and table label:\n\nknitr::kable(group_summary, digits = 1)\n\n\n\nTable 4.1: Change scores by study group.\n\n\n\n\n\n\ngroup\nparticipants\nmean_change\nsd_change\n\n\n\n\ncomparison\n20\n3.0\n1.2\n\n\nintervention\n20\n10.9\n2.7\n\n\n\n\n\n\n\n\nTable 4.1 is numbered and referenced from prose. If another table is inserted earlier, Quarto updates the number.\nKeep a distinction between:\n\nthe data object (group_summary);\nthe presentation function (knitr::kable()); and\nthe interpretation in prose.\n\nThis makes it easier to change table styling without recalculating the result.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#results-produced-as-is",
+    "href": "computation.html#results-produced-as-is",
+    "title": "4  Literate computation",
+    "section": "4.8 Results produced “as is”",
+    "text": "4.8 Results produced “as is”\nSome R functions deliberately return Markdown or HTML. With knitr, results: 'asis' or Quarto’s output: asis can ask the renderer to interpret returned markup rather than print it literally.\nUse this only when the code is intentionally generating document structure. Untrusted text must not be inserted as raw HTML, and format-specific markup may fail in PDF or Word.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#errors-during-rendering",
+    "href": "computation.html#errors-during-rendering",
+    "title": "4  Literate computation",
+    "section": "4.9 Errors during rendering",
+    "text": "4.9 Errors during rendering\nBy default, an error stops the render. This is usually correct: a document with a failed analysis should not silently produce a polished output.\nFor a teaching document that intentionally demonstrates an error:\n#| error: true\n\nmean(\"not numeric\")\nThe error appears in the rendered lesson and the document continues. Do not set error: true globally in a production manuscript merely to obtain an output.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#randomness",
+    "href": "computation.html#randomness",
+    "title": "4  Literate computation",
+    "section": "4.10 Randomness",
+    "text": "4.10 Randomness\nSimulations, sampling, model initialisation, and some algorithms use random numbers. Without a seed, repeated renders may differ:\nset.seed(20260729)\nsample(1:100, 5)\nA seed makes the pseudorandom sequence repeatable. It does not make a simulation design appropriate or guarantee identical results across every software implementation.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#caching-and-freezing",
+    "href": "computation.html#caching-and-freezing",
+    "title": "4  Literate computation",
+    "section": "4.11 Caching and freezing",
+    "text": "4.11 Caching and freezing\nTwo related features can avoid unnecessary computation:\n\ncell caching can reuse a cell’s previous computational result; and\nQuarto freeze can reuse rendered computational Markdown for a document.\n\nExamples:\nexecute:\n  cache: true\nexecute:\n  freeze: auto\nThese improve rendering speed, but cached output can conceal missing external dependencies during testing. Before release, perform at least one clean, uncached render in a fresh copy or controlled environment.\nNever use caching as a substitute for recording inputs.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#choosing-options-for-the-reader",
+    "href": "computation.html#choosing-options-for-the-reader",
+    "title": "4  Literate computation",
+    "section": "4.12 Choosing options for the reader",
+    "text": "4.12 Choosing options for the reader\nThe same analysis can be presented differently:\n\n\n\n\n\n\n\nAudience\nReasonable presentation\n\n\n\n\nAnalyst collaborator\nShow code and output\n\n\nJournal reader\nHide routine setup; show methods-critical code selectively\n\n\nAuditor or reviewer\nProvide source or folded code plus environment details\n\n\nStudent\nShow starter code; reserve answers for solution output\n\n\nLecture audience\nHide most code and enlarge the explanatory figure\n\n\n\nChunk options let one computational workflow support these audiences, but a document should not pretend that hidden source does not exist.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "computation.html#a-substantial-computation-exercise",
+    "href": "computation.html#a-substantial-computation-exercise",
+    "title": "4  Literate computation",
+    "section": "4.13 A substantial computation exercise",
+    "text": "4.13 A substantial computation exercise\nIn manuscript.qmd:\n\nAdd an include: false setup cell that loads packages and reads the CSV.\nDerive change in code.\nReplace typed sample-size and group-count values with inline R.\nCreate a summary object in a hidden setup cell.\nPresent it in a tbl- cell with a caption and refer to it from prose.\nCreate a fig- cell with a caption, informative alt text, explicit dimensions, and both colour and shape mappings.\nUse code-fold for HTML and decide explicitly how code appears in PDF.\nRestart R and render without running any cells manually.\nChange one follow-up value in a temporary copy of the CSV and list every output that updates.\nRestore the source data and render again.\n\n\n4.13.1 Checkpoint\nYou can explain the difference between eval, echo, output, and include; identify which cell creates every object; and trace a reported value back to the source data and code that generated it.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Literate computation</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html",
+    "href": "research-publishing.html",
+    "title": "5  Research publishing",
+    "section": "",
+    "text": "5.1 Different kinds of research writing\nQuarto is not one document style. It is a publishing system that can apply different output conventions to the same structured source.\nThe underlying Markdown and computation skills transfer across several products:\nThese are not merely different file extensions. They have different reading conditions. A slide supports a speaker; a manuscript must stand alone. A tutorial asks the reader to act; a report may prioritise a conclusion.\nThe reusable part is the structured content and analysis. The narrative should still be adapted to its audience.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#different-kinds-of-research-writing",
+    "href": "research-publishing.html#different-kinds-of-research-writing",
+    "title": "5  Research publishing",
+    "section": "",
+    "text": "Product\nTypical reader\nImportant features\n\n\n\n\nAnalysis note\nYourself or close collaborators\nVisible code, diagnostics, rapid iteration\n\n\nResearch report\nClient, team, or decision maker\nNavigation, executive summary, branded output\n\n\nJournal manuscript\nEditors, reviewers, scholarly readers\nAuthor metadata, citations, numbered objects, submission template\n\n\nReproducible manuscript site\nScholarly readers and auditors\nArticle plus linked computational notebooks and resources\n\n\nBook or technical manual\nLearners and long-form readers\nChapters, navigation, cross-chapter references, search\n\n\nTeaching practical\nStudents and instructors\nExercises, starter code, controlled solutions\n\n\nPresentation\nLive audience\nLarge text, staged explanation, speaker notes",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#what-the-outputs-actually-look-like",
+    "href": "research-publishing.html#what-the-outputs-actually-look-like",
+    "title": "5  Research publishing",
+    "section": "5.2 What the outputs actually look like",
+    "text": "5.2 What the outputs actually look like\nThe completed workshop project renders one small analysis to several products.\n\n\n5.2.1 HTML manuscript\n\n\n\nHTML manuscript showing a navigable Results section, folded code, a generated table, and a generated figure.\n\n\nHTML provides navigation, links, responsive layout, and optional folded code.\n\n\n5.2.2 Standard PDF manuscript\n\n\n\nFirst page of the standard PDF manuscript with a conventional title block and fixed page layout.\n\n\nPDF fixes typography and page boundaries for distribution and review.\n\n\n\n\n5.2.3 Elsevier-format PDF\n\n\n\nFirst page of the same demonstration analysis rendered with the bundled Elsevier journal format.\n\n\nThe journal format changes title metadata, typography, citations, and layout.\n\n\n5.2.4 RevealJS presentation\n\n\n\nRevealJS slide showing the same computed sample size and figure in presentation layout.\n\n\nThe result is reused, but the prose is shortened and the visual is enlarged for a live audience.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#one-source-with-common-and-format-specific-options",
+    "href": "research-publishing.html#one-source-with-common-and-format-specific-options",
+    "title": "5  Research publishing",
+    "section": "5.3 One source with common and format-specific options",
+    "text": "5.3 One source with common and format-specific options\nThe manuscript declares both HTML and PDF:\nformat:\n  html:\n    toc: true\n    code-fold: true\n    number-sections: true\n  pdf:\n    number-sections: true\n    keep-tex: true\nOptions indented under html affect only HTML. Options indented under pdf affect only PDF. Shared document metadata sits above format:\ntitle: \"Change scores in a synthetic training study\"\nauthor: \"A. Researcher\"\nbibliography: bibliography.bib\nnumber-sections: true\nformat:\n  html:\n    toc: true\n  pdf: default\nMove an option to the shared level only when it is valid and intended for every format.\nRender one target:\nquarto render manuscript.qmd --to html\nquarto render manuscript.qmd --to pdf\nRender all declared targets:\nquarto render manuscript.qmd",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#format-is-not-content",
+    "href": "research-publishing.html#format-is-not-content",
+    "title": "5  Research publishing",
+    "section": "5.4 Format is not content",
+    "text": "5.4 Format is not content\nIdeally these remain identical across outputs:\n\ndata transformations;\nmodel specifications;\ncomputed values;\nsubstantive claims;\nfigure and table labels;\ncitations; and\nsection identifiers.\n\nThese may legitimately differ:\n\nnavigation and table of contents;\npage breaks;\nwhether code can be folded;\nfigure dimensions;\nlink presentation;\nsupplementary navigation;\npublisher metadata; and\ntypography.\n\nIf changing from HTML to PDF changes a numerical answer, the project probably has an execution, state, or conditional-content problem—not a formatting issue.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#html-pdf-and-word-serve-different-workflows",
+    "href": "research-publishing.html#html-pdf-and-word-serve-different-workflows",
+    "title": "5  Research publishing",
+    "section": "5.5 HTML, PDF, and Word serve different workflows",
+    "text": "5.5 HTML, PDF, and Word serve different workflows\n\n\n\n\n\n\n\n\n\nFeature\nHTML\nPDF\nDOCX\n\n\n\n\nResponsive layout\nYes\nNo\nEditor-dependent\n\n\nFixed pages\nNo\nYes\nYes, but may reflow\n\n\nFoldable code\nYes\nNo\nNo\n\n\nLive hyperlinks\nStrong\nSupported\nSupported\n\n\nReader annotation\nBrowser tools\nStrong in review tools\nStrong in editorial workflows\n\n\nPrecise typesetting\nTheme/CSS\nLaTeX or Typst\nReference document/styles\n\n\nCommon use\nWeb reading\nReview and archival copy\nCo-author/editor revision\n\n\n\nWord output can be useful even when PDF is the final target. A journal or co-author may require tracked changes in DOCX. Quarto can use a reference DOCX to map semantic elements to organisational styles.\nDo not promise that every advanced HTML widget or LaTeX command will transfer perfectly to Word. Prefer portable Markdown, figures, tables, equations, and cross-references when multi-format output matters.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#numbering-and-cross-references-survive-reformatting",
+    "href": "research-publishing.html#numbering-and-cross-references-survive-reformatting",
+    "title": "5  Research publishing",
+    "section": "5.6 Numbering and cross-references survive reformatting",
+    "text": "5.6 Numbering and cross-references survive reformatting\nThe section labels introduced in Section 3.4 are format-independent:\n## Methods {#sec-methods}\n\nSee @sec-methods for the study design.\nFigures and tables use the same model:\n#| label: fig-primary-result\n#| fig-cap: \"Primary outcome by study group.\"\nThe primary comparison is shown in @fig-primary-result.\nThe format decides whether the result is “Figure 1”, “Fig. 1”, or another publisher convention. The source refers to a stable identifier rather than a typed number.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#citation-processing",
+    "href": "research-publishing.html#citation-processing",
+    "title": "5  Research publishing",
+    "section": "5.7 Citation processing",
+    "text": "5.7 Citation processing\nResearch publishing involves three separable components:\n\nbibliographic data in a .bib or supported bibliography file;\ncitation locations such as [@knuth1984] in the source; and\ncitation style, supplied by the format or a .csl file.\n\nChanging style should not require retyping citations.\nbibliography: bibliography.bib\ncsl: journal-style.csl\nJournal extensions may supply their own CSL, BibTeX style, or citation method. Check the rendered bibliography for:\n\nauthor order and spelling;\narticle title and journal;\nyear, volume, issue, and pages;\nDOI or URL;\nduplicated records; and\nuncited or missing sources.\n\nAutomated formatting faithfully reproduces incorrect metadata.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#author-and-affiliation-metadata",
+    "href": "research-publishing.html#author-and-affiliation-metadata",
+    "title": "5  Research publishing",
+    "section": "5.8 Author and affiliation metadata",
+    "text": "5.8 Author and affiliation metadata\nQuarto supports structured authors:\nauthor:\n  - name: Alex Researcher\n    orcid: 0000-0000-0000-0000\n    email: alex@example.edu\n    affiliations:\n      - ref: university\naffiliations:\n  - id: university\n    name: Example University\n    department: School of Research\nStructured metadata lets a format decide how names, affiliations, email addresses, and ORCID identifiers appear. A hand-typed title-page paragraph is harder for templates and indexing systems to interpret.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#what-a-journal-extension-contains",
+    "href": "research-publishing.html#what-a-journal-extension-contains",
+    "title": "5  Research publishing",
+    "section": "5.9 What a journal extension contains",
+    "text": "5.9 What a journal extension contains\nA Quarto journal extension can package:\n\na LaTeX document class;\nPandoc template partials;\nCSL or BibTeX styles;\npublisher-specific YAML defaults;\nLua filters;\nCSS for an HTML preview; and\na starter article template.\n\nIt changes how Quarto translates structured source into a publisher’s format. It should not contain the scientific analysis itself.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#starting-a-journal-article-versus-adding-a-format",
+    "href": "research-publishing.html#starting-a-journal-article-versus-adding-a-format",
+    "title": "5  Research publishing",
+    "section": "5.10 Starting a journal article versus adding a format",
+    "text": "5.10 Starting a journal article versus adding a format\nFor a new article based on a supplied template:\nquarto use template quarto-journals/elsevier\nThis creates a project with example metadata and source.\nFor an existing article:\nquarto add quarto-journals/elsevier\nThis installs the extension under _extensions. The workshop bundles that folder so the demonstration works without downloading it on the day.\nThe document can then declare:\nformat:\n  elsevier-pdf:\n    keep-tex: true\nThe keep-tex option is useful when a submission requires generated LaTeX source or when a template error needs diagnosis.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#comparing-standard-and-journal-output",
+    "href": "research-publishing.html#comparing-standard-and-journal-output",
+    "title": "5  Research publishing",
+    "section": "5.11 Comparing standard and journal output",
+    "text": "5.11 Comparing standard and journal output\nThe standard PDF and Elsevier PDF above contain the same analysis concept but look different because they serve different conventions.\nWhen comparing formats, check:\n\ntitle, author, and affiliation layout;\nabstract and keyword placement;\nheading levels and numbering;\nfigure size and placement;\ntable width;\ncitation and bibliography style;\nline and page breaks;\nsupplementary-material requirements; and\nfiles required for submission.\n\n\n\n\n\n\n\nWarningA template is not the journal instructions\n\n\n\nExtensions can lag behind publisher changes, and individual journals can impose requirements beyond a publisher-wide class. Check the journal’s current author instructions, accepted source formats, required declarations, word limits, reference style, and figure specifications at the time of submission.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#conditional-content",
+    "href": "research-publishing.html#conditional-content",
+    "title": "5  Research publishing",
+    "section": "5.12 Conditional content",
+    "text": "5.12 Conditional content\nOccasionally one format needs an explanation or resource that another does not. Quarto supports format-aware content:\n::: {.content-visible when-format=\"html\"}\nUse the navigation panel to explore the analysis.\n:::\n\n::: {.content-visible when-format=\"pdf\"}\nThe full analysis begins on the next page.\n:::\nUse conditional content sparingly. Duplicated claims can drift apart. Prefer shared source unless the reading context genuinely differs.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#page-and-figure-problems-are-diagnostic",
+    "href": "research-publishing.html#page-and-figure-problems-are-diagnostic",
+    "title": "5  Research publishing",
+    "section": "5.13 Page and figure problems are diagnostic",
+    "text": "5.13 Page and figure problems are diagnostic\nA plot that works in HTML may be too wide for PDF. A long table may overflow a page. Good repairs include:\n\nchoosing sensible figure dimensions;\nsimplifying a figure rather than shrinking all text;\nsplitting a table by meaning;\nmoving detailed results to an appendix;\nusing landscape pages only when necessary; and\nchecking the output at its actual reading size.\n\nAvoid format-specific manual spacing and raw LaTeX until semantic options have been exhausted. Raw fixes often make another output worse.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#reproducible-submission-workflow",
+    "href": "research-publishing.html#reproducible-submission-workflow",
+    "title": "5  Research publishing",
+    "section": "5.14 Reproducible submission workflow",
+    "text": "5.14 Reproducible submission workflow\nA defensible workflow is:\n\nRender standard HTML frequently during analysis.\nRender PDF regularly rather than only at submission time.\nRun a clean render after restarting R.\nInspect every numbered reference and citation.\nRender the journal template from the same source.\nCompare computed values across outputs.\nRead the journal’s current instructions.\nPackage required source, bibliography, class, figure, and supplementary files.\nPreserve the submitted source and environment record.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "research-publishing.html#publishing-exercise",
+    "href": "research-publishing.html#publishing-exercise",
+    "title": "5  Research publishing",
+    "section": "5.15 Publishing exercise",
+    "text": "5.15 Publishing exercise\nUsing manuscript.qmd and journal-demo.qmd:\n\nRender the manuscript to HTML and PDF.\nCompare headings, navigation, code display, figures, tables, and references.\nTurn section numbering off in HTML only and confirm that cross-references still resolve.\nTurn numbering back on.\nRender the Elsevier demonstration.\nIdentify at least five presentation changes and confirm that the sample size and figure data are unchanged.\nFind which files in _extensions/quarto-journals/elsevier control the class, bibliography, and title layout.\nWrite a short submission checklist for a journal relevant to your discipline.\n\n\n5.15.1 Checkpoint\nYou can distinguish analysis from format, explain when to start from a template versus add an extension, and verify that multiple outputs remain substantively consistent.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Research publishing</span>"
+    ]
+  },
+  {
+    "objectID": "capstone.html",
+    "href": "capstone.html",
+    "title": "6  Bonus: prove it reruns",
+    "section": "",
+    "text": "6.1 Clean-session check\nThe final test is not whether the current HTML looks correct. It is whether the project can recreate it from its sources.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bonus: prove it reruns</span>"
+    ]
+  },
+  {
+    "objectID": "capstone.html#clean-session-check",
+    "href": "capstone.html#clean-session-check",
+    "title": "6  Bonus: prove it reruns",
+    "section": "",
+    "text": "Save every source file.\nRestart R.\nDo not run cells interactively.\nIn the project terminal, run:\n\nquarto render manuscript.qmd\n\nOpen the newly rendered outputs.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bonus: prove it reruns</span>"
+    ]
+  },
+  {
+    "objectID": "capstone.html#reproducibility-checklist",
+    "href": "capstone.html#reproducibility-checklist",
+    "title": "6  Bonus: prove it reruns",
+    "section": "6.2 Reproducibility checklist",
+    "text": "6.2 Reproducibility checklist\nUse this checklist before sharing a computational document:\n\nSource data are present and documented.\nAll paths are relative to the project.\nEvery reported value is calculated or clearly sourced.\nFigures and tables are generated by code.\nLabels and cross-references resolve.\nCitations and references render.\nA fresh R session can render the document.\nRequired software and packages are listed.\nThe output contains no private paths, credentials, or unintended data.\nFigure descriptions and document structure are accessible.\n\n\n6.2.1 Final challenge 6 minutes\nWithout running any R cell manually, rebuild the manuscript. Explain to a neighbour how the sample-size sentence stays synchronised with the CSV.\n\n\n6.2.2 Workshop outcome\nYou leave with a functioning literate-programming project containing a manuscript. The project reruns from source and can be used as a reference for your next real document.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bonus: prove it reruns</span>"
+    ]
+  },
+  {
+    "objectID": "capstone.html#record-the-environment",
+    "href": "capstone.html#record-the-environment",
+    "title": "6  Bonus: prove it reruns",
+    "section": "6.3 Record the environment",
+    "text": "6.3 Record the environment\nThe completed manuscript ends with an executable R cell containing:\n#| label: session-information\nsessionInfo()\nThis record is useful diagnostic evidence. It is not a dependency lockfile, but it tells a future reader which R and package versions produced the output.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Bonus: prove it reruns</span>"
+    ]
+  },
+  {
+    "objectID": "next-steps.html",
+    "href": "next-steps.html",
+    "title": "7  Next steps",
+    "section": "",
+    "text": "7.1 Apply the workflow to real work\nChoose one modest document rather than migrating an entire research programme. A useful first project has:\nRebuild it as a project with source data, a .qmd file, a bibliography, and a short setup note.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Next steps</span>"
+    ]
+  },
+  {
+    "objectID": "next-steps.html#apply-the-workflow-to-real-work",
+    "href": "next-steps.html#apply-the-workflow-to-real-work",
+    "title": "7  Next steps",
+    "section": "",
+    "text": "one or two input files;\na calculation you currently repeat;\nat least one figure or table; and\na clear reader and output format.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Next steps</span>"
+    ]
+  },
+  {
+    "objectID": "next-steps.html#add-safeguards-when-they-solve-a-problem",
+    "href": "next-steps.html#add-safeguards-when-they-solve-a-problem",
+    "title": "7  Next steps",
+    "section": "7.2 Add safeguards when they solve a problem",
+    "text": "7.2 Add safeguards when they solve a problem\nPossible next layers include:\n\nGit for change history and collaboration;\nrenv for an R package lockfile;\nautomated rendering in continuous integration;\nparameterised reports;\nQuarto manuscripts and journal extensions;\nproject profiles for student and solution variants;\na shared institutional theme; and\npublishing to an internal server or static host.\n\nThe Beyond the workshop appendix gives a starting point without making these tools prerequisites.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Next steps</span>"
+    ]
+  },
+  {
+    "objectID": "next-steps.html#keep-these-habits",
+    "href": "next-steps.html#keep-these-habits",
+    "title": "7  Next steps",
+    "section": "7.3 Keep these habits",
+    "text": "7.3 Keep these habits\n\nTreat rendered documents as products, not the primary source.\nKeep inputs immutable and transformations explicit.\nPrefer relative paths.\nRender from a clean session regularly.\nSeparate computation from claims: code updates numbers, authors remain responsible for interpretation.\nPreserve enough environment information for another person to diagnose a failed rerun.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Next steps</span>"
+    ]
+  },
+  {
+    "objectID": "next-steps.html#resources",
+    "href": "next-steps.html#resources",
+    "title": "7  Next steps",
+    "section": "7.4 Resources",
+    "text": "7.4 Resources\n\nQuarto guide\nQuarto computations\nQuarto journal articles\nQuarto presentations\nunilur extension\n\n\n\n\n\n\n\nTip\n\n\n\nCopy the completed project, rename the copy, replace the synthetic CSV with your own documented data, and change one section at a time. Keep the original as a known-working reference.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Next steps</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/markdown-reference.html",
+    "href": "appendices/markdown-reference.html",
+    "title": "Appendix A — Markdown and cell-option reference",
+    "section": "",
+    "text": "A.1 Markdown\nLists need a blank line before them:",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Markdown and cell-option reference</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/markdown-reference.html#markdown",
+    "href": "appendices/markdown-reference.html#markdown",
+    "title": "Appendix A — Markdown and cell-option reference",
+    "section": "",
+    "text": "Purpose\nSource\n\n\n\n\nHeading\n## Results\n\n\nEmphasis\n*emphasis*\n\n\nStrong emphasis\n**important**\n\n\nInline code\n`manuscript.qmd`\n\n\nLink\n[label](https://example.org)\n\n\nImage\n![Alt text](image.png)\n\n\nCitation\n[@citation-key]\n\n\nInline equation\n$y = a + bx$\n\n\nFootnote\nStatement.[^1]\n\n\nFigure reference\n@fig-change\n\n\nTable reference\n@tbl-summary\n\n\n\n\nThe aims are:\n\n- estimate the average change;\n- compare groups; and\n- communicate uncertainty.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Markdown and cell-option reference</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/markdown-reference.html#code-cells",
+    "href": "appendices/markdown-reference.html#code-cells",
+    "title": "Appendix A — Markdown and cell-option reference",
+    "section": "A.2 Code cells",
+    "text": "A.2 Code cells\nAn executable R cell begins with ```{r} and contains:\n#| label: descriptive-name\n#| echo: true\n#| warning: false\n#| message: false\n\n# R code\n\n\n\nOption\nCommon value\nEffect\n\n\n\n\nlabel\nfig-change\nIdentifies the cell/output\n\n\necho\nfalse\nHides source code\n\n\neval\nfalse\nDisplays but does not run code\n\n\ninclude\nfalse\nRuns but hides code and output\n\n\noutput\nfalse\nHides output\n\n\nwarning\nfalse\nHides R warnings\n\n\nmessage\nfalse\nHides R messages\n\n\nfig-cap\ntext\nAdds a caption\n\n\nfig-alt\ntext\nAdds an accessible description\n\n\ntbl-cap\ntext\nAdds a table caption\n\n\n\nLabels must be unique. Use the fig- and tbl- prefixes for referenceable figures and tables.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Markdown and cell-option reference</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/markdown-reference.html#yaml",
+    "href": "appendices/markdown-reference.html#yaml",
+    "title": "Appendix A — Markdown and cell-option reference",
+    "section": "A.3 YAML",
+    "text": "A.3 YAML\n---\ntitle: \"Document title\"\nauthor: \"Name\"\ndate: today\nbibliography: bibliography.bib\nformat:\n  html:\n    toc: true\n  pdf:\n    number-sections: true\nexecute:\n  warning: false\n  message: false\n---\nIf YAML parsing fails, check indentation, tabs, unmatched quotes, and whether both --- delimiter lines are present.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Markdown and cell-option reference</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/markdown-reference.html#terminal-commands",
+    "href": "appendices/markdown-reference.html#terminal-commands",
+    "title": "Appendix A — Markdown and cell-option reference",
+    "section": "A.4 Terminal commands",
+    "text": "A.4 Terminal commands\nquarto preview\nquarto render manuscript.qmd\nquarto render manuscript.qmd --to html\nquarto render manuscript.qmd --to pdf",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Markdown and cell-option reference</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html",
+    "href": "appendices/troubleshooting.html",
+    "title": "Appendix B — Troubleshooting",
+    "section": "",
+    "text": "B.1 Read the first useful error\nRendering errors often cascade. Start near the first line that names your source file, missing package, missing file, or YAML key.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#quarto-command-not-found",
+    "href": "appendices/troubleshooting.html#quarto-command-not-found",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.2 quarto: command not found",
+    "text": "B.2 quarto: command not found\n\nRestart the editor or terminal after installing Quarto.\nConfirm installation with quarto --version.\nOn managed university computers, Quarto may need to be installed by IT or selected explicitly in the editor’s preferences.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#an-r-package-is-missing",
+    "href": "appendices/troubleshooting.html#an-r-package-is-missing",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.3 An R package is missing",
+    "text": "B.3 An R package is missing\nRun:\nRscript setup.R\nOr install an individual package in R:\ninstall.packages(\"readr\")\nRestart R and render again.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#the-csv-cannot-be-found",
+    "href": "appendices/troubleshooting.html#the-csv-cannot-be-found",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.4 The CSV cannot be found",
+    "text": "B.4 The CSV cannot be found\n\nConfirm the terminal is inside the extracted project folder.\nConfirm data/training-study.csv exists.\nUse the relative path exactly as written, including letter case.\nDo not use setwd() to conceal a project-location problem.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#yaml-parsing-fails",
+    "href": "appendices/troubleshooting.html#yaml-parsing-fails",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.5 YAML parsing fails",
+    "text": "B.5 YAML parsing fails\nCheck:\n\nspaces rather than tabs;\naligned indentation;\na colon after each key;\nmatching quotation marks; and\nopening and closing --- lines.\n\nTemporarily reduce the YAML to title and one format, render, then restore one option at a time.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#pdf-will-not-render",
+    "href": "appendices/troubleshooting.html#pdf-will-not-render",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.6 PDF will not render",
+    "text": "B.6 PDF will not render\n\nConfirm HTML works:\nquarto render manuscript.qmd --to html\nCheck for a LaTeX engine:\nquarto check latex\nIf none is found, install TinyTeX in R:\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()\nRestart the editor and rerun Rscript preflight.R.\n\nIf a managed computer blocks installation, continue with HTML and use the provided completed PDF during the format-comparison activity.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#a-figure-reference-shows",
+    "href": "appendices/troubleshooting.html#a-figure-reference-shows",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.7 A figure reference shows ?",
+    "text": "B.7 A figure reference shows ?\n\nGive the producing cell a unique label beginning with fig-.\nAdd fig-cap.\nRefer to the label as @fig-name.\nRender the entire document again.\n\nFor tables, use a tbl- label and tbl-cap.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#it-worked-interactively-but-not-when-rendered",
+    "href": "appendices/troubleshooting.html#it-worked-interactively-but-not-when-rendered",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.8 It worked interactively but not when rendered",
+    "text": "B.8 It worked interactively but not when rendered\nThe interactive R session contained an object or package that the document did not create or load. Restart R and add the missing setup to the .qmd source. This is a useful reproducibility failure, not a reason to avoid clean sessions.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/troubleshooting.html#recovery-route",
+    "href": "appendices/troubleshooting.html#recovery-route",
+    "title": "Appendix B — Troubleshooting",
+    "section": "B.9 Recovery route",
+    "text": "B.9 Recovery route\nIf you fall behind:\n\nsave your current file with a different name;\ncopy the relevant .qmd from the completed project;\nrender it to rejoin the workshop; and\ncompare files after the session.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Troubleshooting</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/python.html",
+    "href": "appendices/python.html",
+    "title": "Appendix C — Python and Jupyter translation",
+    "section": "",
+    "text": "C.1 Preflight\nThe live workshop uses R so the room can share one execution path. Quarto also supports Python through Jupyter.\nCheck Python and Jupyter:\nCreate an environment using your organisation’s preferred tool, then install:\nEnvironment creation and dependency locking differ among venv, Conda, Poetry, and uv; follow local policy rather than mixing them casually.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python and Jupyter translation</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/python.html#preflight",
+    "href": "appendices/python.html#preflight",
+    "title": "Appendix C — Python and Jupyter translation",
+    "section": "",
+    "text": "python --version\nquarto check jupyter\n\npython -m pip install jupyter pandas matplotlib",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python and Jupyter translation</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/python.html#python-cell",
+    "href": "appendices/python.html#python-cell",
+    "title": "Appendix C — Python and Jupyter translation",
+    "section": "C.2 Python cell",
+    "text": "C.2 Python cell\nIn an executable Python cell, write:\n#| label: load-data-python\n\nimport pandas as pd\n\nstudy = pd.read_csv(\"data/training-study.csv\")\nstudy[\"change\"] = study[\"followup_score\"] - study[\"baseline_score\"]\nA .qmd file containing Python cells uses the Jupyter engine unless another engine is selected explicitly.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python and Jupyter translation</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/python.html#inline-python",
+    "href": "appendices/python.html#inline-python",
+    "title": "Appendix C — Python and Jupyter translation",
+    "section": "C.3 Inline Python",
+    "text": "C.3 Inline Python\nType the following sentence (the backticks are part of the source):\nThe study contains `{python} len(study)` participants.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python and Jupyter translation</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/python.html#figure",
+    "href": "appendices/python.html#figure",
+    "title": "Appendix C — Python and Jupyter translation",
+    "section": "C.4 Figure",
+    "text": "C.4 Figure\n#| label: fig-change-python\n#| fig-cap: \"Change score by training hours and study group.\"\n#| fig-alt: \"Scatterplot of training hours against change score.\"\n\nimport matplotlib.pyplot as plt\n\nfor name, group in study.groupby(\"group\"):\n    plt.scatter(group[\"training_hours\"], group[\"change\"], label=name)\nplt.xlabel(\"Training hours\")\nplt.ylabel(\"Change score\")\nplt.legend()",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python and Jupyter translation</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/python.html#concepts-that-transfer-directly",
+    "href": "appendices/python.html#concepts-that-transfer-directly",
+    "title": "Appendix C — Python and Jupyter translation",
+    "section": "C.5 Concepts that transfer directly",
+    "text": "C.5 Concepts that transfer directly\n\nMarkdown and YAML\nrelative paths\nsource/output separation\ncell labels and most presentation options\ncitations and cross-references\nHTML, PDF, and RevealJS formats\nclean-session rendering\n\nThe main differences are environment management, package APIs, and the computational engine.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python and Jupyter translation</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html",
+    "href": "appendices/accessibility.html",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "",
+    "text": "D.1 Structure\nReproducible output should also be usable output.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html#structure",
+    "href": "appendices/accessibility.html#structure",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "",
+    "text": "Use headings in order; do not choose levels for visual size.\nUse real lists and tables rather than spaces or manual line breaks.\nGive links descriptive text rather than “click here”.\nState the document language.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html#figures",
+    "href": "appendices/accessibility.html#figures",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "D.2 Figures",
+    "text": "D.2 Figures\nEvery meaningful figure should have fig-alt that describes:\n\nthe chart type;\nthe variables and comparison;\nthe major visible pattern; and\ninformation not already supplied by the caption.\n\nDo not begin with “image of”. Decorative images should have empty alt text.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html#colour",
+    "href": "appendices/accessibility.html#colour",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "D.3 Colour",
+    "text": "D.3 Colour\n\nDo not encode groups by colour alone; add shape, labels, or direct annotation where practical.\nUse palettes with adequate contrast.\nCheck figures in greyscale.\nAvoid red/green as the only distinction.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html#tables-and-code",
+    "href": "appendices/accessibility.html#tables-and-code",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "D.4 Tables and code",
+    "text": "D.4 Tables and code\n\nKeep tables small and give them captions.\nAvoid merged cells where possible.\nWrap long code lines and avoid screenshots of code.\nExplain what a code example is intended to demonstrate.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html#slides",
+    "href": "appendices/accessibility.html#slides",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "D.5 Slides",
+    "text": "D.5 Slides\n\nUse large text and high contrast.\nKeep one main idea per slide.\nDescribe visual material aloud.\nAdd speaker notes for required descriptions and facilitation cues.\nProvide the HTML or PDF afterward so participants can revisit the content.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/accessibility.html#final-check",
+    "href": "appendices/accessibility.html#final-check",
+    "title": "Appendix D — Accessibility checklist",
+    "section": "D.6 Final check",
+    "text": "D.6 Final check\nInspect both HTML and PDF. A correct source does not guarantee equivalent accessibility across output formats.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Accessibility checklist</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/beyond-workshop.html",
+    "href": "appendices/beyond-workshop.html",
+    "title": "Appendix E — Beyond the workshop",
+    "section": "",
+    "text": "E.1 Git\nThese tools strengthen the workflow but are intentionally outside the live three-hour session.\nGit records source changes and supports collaboration. Start by tracking source files, data that may be shared legally, the bibliography, and _extensions. Ignore generated output unless a publishing workflow requires it.\nNever commit credentials, confidential data, or files you do not have permission to distribute.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Beyond the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/beyond-workshop.html#renv",
+    "href": "appendices/beyond-workshop.html#renv",
+    "title": "Appendix E — Beyond the workshop",
+    "section": "E.2 renv",
+    "text": "E.2 renv\nFor an R project:\ninstall.packages(\"renv\")\nrenv::init()\nrenv::snapshot()\nThis creates a lockfile describing package versions. Collaborators can use renv::restore(). Review organisational policy before committing package archives or configuring private repositories.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Beyond the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/beyond-workshop.html#automated-rendering",
+    "href": "appendices/beyond-workshop.html#automated-rendering",
+    "title": "Appendix E — Beyond the workshop",
+    "section": "E.3 Automated rendering",
+    "text": "E.3 Automated rendering\nA continuous-integration job can:\n\nrestore dependencies;\nrun quarto render;\nfail when code or references break; and\npublish validated static output.\n\nAutomation is most useful after the project renders reliably on a clean local session.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Beyond the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/beyond-workshop.html#quarto-manuscripts",
+    "href": "appendices/beyond-workshop.html#quarto-manuscripts",
+    "title": "Appendix E — Beyond the workshop",
+    "section": "E.4 Quarto manuscripts",
+    "text": "E.4 Quarto manuscripts\nQuarto manuscript projects connect an article, computational notebooks, and multiple output formats. They are useful when the computational record itself is part of the publication.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Beyond the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "appendices/beyond-workshop.html#parameters-and-profiles",
+    "href": "appendices/beyond-workshop.html#parameters-and-profiles",
+    "title": "Appendix E — Beyond the workshop",
+    "section": "E.5 Parameters and profiles",
+    "text": "E.5 Parameters and profiles\nParameters can create repeated reports for different cohorts or datasets. Profiles can change configuration for student, solution, draft, and production builds. Prefer these mechanisms once repeated manual switches are causing real errors.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Beyond the workshop</span>"
+    ]
+  }
+]
