@@ -1,0 +1,55 @@
+project:
+  type: book
+  output-dir: _site
+  resources:
+    - materials/downloads
+
+book:
+  title: "Reproducible Writing with Quarto"
+  subtitle: "A two-hour, hands-on workshop"
+  author: "Workshop facilitator"
+  date: last-modified
+  chapters:
+    - index.qmd
+    - prework.qmd
+    - reproducible-writing.qmd
+    - markdown.qmd
+    - computation.qmd
+    - research-publishing.qmd
+    - capstone.qmd
+    - next-steps.qmd
+  appendices:
+    - appendices/markdown-reference.qmd
+    - appendices/troubleshooting.qmd
+    - appendices/python.qmd
+    - appendices/accessibility.qmd
+    - appendices/beyond-workshop.qmd
+  downloads: [pdf]
+  page-footer:
+    left: "Reproducible Writing with Quarto"
+    right: "Workshop materials"
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    html-math-method: mathml
+    toc-depth: 2
+    code-copy: true
+    code-overflow: wrap
+    link-external-newwindow: true
+  pdf:
+    documentclass: scrreprt
+    toc-depth: 2
+    colorlinks: true
+    code-overflow: wrap
+    geometry:
+      - margin=25mm
+
+execute:
+  freeze: auto
+
+lang: en-AU

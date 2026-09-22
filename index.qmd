@@ -1,0 +1,70 @@
+# Welcome {.unnumbered}
+
+::: {.hero}
+## One source, trustworthy results, many outputs
+
+In this workshop you will build a small research manuscript in which the prose,
+analysis, figures, tables, and references live together. You will render it to
+HTML and PDF.
+:::
+
+## By the end
+
+You will be able to:
+
+- explain literate programming in practical terms;
+- write structured prose in Markdown;
+- combine R code and narrative in a `.qmd` file;
+- use relative paths, citations, figures, tables, and cross-references;
+- render one source document to HTML and PDF
+- start your PhD thesis using the [quarto template](https://github.com/quarto-monash/thesis)
+
+## What you will make
+
+The workshop project contains a short manuscript analysing a synthetic training study.
+
+The data are synthetic, small, and stored inside the project. No network
+connection, account, or API key is required during the activities.
+
+::: {.callout-important}
+## Download before the workshop
+
+- [Participant starter project](materials/downloads/quarto-workshop-starter.zip)
+- [Completed project](materials/downloads/quarto-workshop-complete.zip)
+
+Work from the starter project. Keep the completed project closed unless you need
+to recover from a missed step or want to compare your result at the end.
+:::
+
+## Illustrative running order
+
+The detailed chapters are also designed to work as a reference after the
+workshop. They contain more examples than need to be demonstrated live, so the
+facilitator can select material and adjust the timings for the group.
+
+| Time | Topic | Product |
+|---|---|---|
+| 00:00–00:15 | Setup checkpoint | First successful render |
+| 00:15–00:30 | Reproducible writing | Project map |
+| 00:30–00:50 | Markdown | Structured manuscript |
+| 0:50–01:05 | Break | |
+| 01:05–01:35 | Computation | Live figure, table, and inline result |
+| 01:35–02:00 | Research publishing | HTML, PDF, and journal-format demo |
+
+## How to use this book
+
+Keep the book open beside your editor. Green **Try it** boxes are the main
+hands-on path. Yellow **Checkpoint** boxes describe what should work before the
+room moves on. Purple **Discussion** boxes are brief pauses for interpretation.
+Blue **If you finish early** boxes are optional and can be skipped without
+affecting later exercises.
+
+The main path assumes R. A compact [Python/Jupyter
+translation](appendices/python.qmd) is provided for later use.
+
+## Workshop details
+
+- **Institution:** {{< var workshop.institution >}}
+- **Presenter:** {{< var workshop.presenter >}}
+- **Date:** {{< var workshop.date >}}
+- **Contact:** {{< var workshop.contact >}}

@@ -1,0 +1,13 @@
+project:
+  type: default
+  render:
+    - manuscript.qmd
+    - chunk-options-demo.qmd
+    - tutorial.qmd
+    - slides.qmd
+
+execute:
+  warning: false
+  message: false
+
+lang: en-AU

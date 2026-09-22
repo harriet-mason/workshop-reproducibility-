@@ -1,0 +1,50 @@
+# Accessibility checklist
+
+Reproducible output should also be usable output.
+
+## Structure
+
+- Use headings in order; do not choose levels for visual size.
+- Use real lists and tables rather than spaces or manual line breaks.
+- Give links descriptive text rather than “click here”.
+- State the document language.
+
+## Figures
+
+Every meaningful figure should have `fig-alt` that describes:
+
+- the chart type;
+- the variables and comparison;
+- the major visible pattern; and
+- information not already supplied by the caption.
+
+Do not begin with “image of”. Decorative images should have empty alt text.
+
+## Colour
+
+- Do not encode groups by colour alone; add shape, labels, or direct annotation
+  where practical.
+- Use palettes with adequate contrast.
+- Check figures in greyscale.
+- Avoid red/green as the only distinction.
+
+## Tables and code
+
+- Keep tables small and give them captions.
+- Avoid merged cells where possible.
+- Wrap long code lines and avoid screenshots of code.
+- Explain what a code example is intended to demonstrate.
+
+## Slides
+
+- Use large text and high contrast.
+- Keep one main idea per slide.
+- Describe visual material aloud.
+- Add speaker notes for required descriptions and facilitation cues.
+- Provide the HTML or PDF afterward so participants can revisit the content.
+
+## Final check
+
+Inspect both HTML and PDF. A correct source does not guarantee equivalent
+accessibility across output formats.
+

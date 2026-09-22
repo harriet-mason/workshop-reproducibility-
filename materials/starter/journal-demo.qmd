@@ -1,0 +1,62 @@
+---
+title: "Change scores in a synthetic training study"
+author:
+  - name: Workshop Participant
+    affiliations:
+      - name: Your University
+abstract: |
+  This demonstration renders a small computational analysis with a bundled
+  Elsevier journal format. The data are synthetic and the result is illustrative.
+keywords:
+  - reproducibility
+  - literate programming
+  - Quarto
+bibliography: bibliography.bib
+format:
+  elsevier-pdf:
+    keep-tex: true
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+
+Literate programming combines narrative and executable analysis [@knuth1984].
+This document demonstrates that a journal format changes presentation while the
+underlying calculation remains recorded in the source.
+
+```{r}
+#| include: false
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+study <- read_csv("data/training-study.csv", show_col_types = FALSE) |>
+  mutate(change = followup_score - baseline_score)
+```
+
+## Results
+
+The synthetic dataset contains `r nrow(study)` observations.
+
+```{r}
+#| label: fig-journal-change
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "Scatterplot of training hours against change score, distinguished by study group."
+
+ggplot(study, aes(training_hours, change, colour = group, shape = group)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Training hours", y = "Change in score") +
+  theme_minimal()
+```
+
+## Discussion
+
+The output is a formatting demonstration, not evidence about a real
+intervention. Journal instructions should be checked at the time of submission.
+
+## References
+

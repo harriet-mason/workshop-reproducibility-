@@ -1,0 +1,135 @@
+---
+title: "Chunk options: runnable demonstrations"
+subtitle: "Change one option, render, and compare"
+format:
+  html:
+    toc: true
+    code-fold: false
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: demo-setup
+#| include: false
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+study <- read_csv("data/training-study.csv", show_col_types = FALSE) |>
+  mutate(change = followup_score - baseline_score)
+```
+
+# Code and output
+
+The default shows both code and its result.
+
+```{r}
+#| label: demo-default
+
+study |>
+  summarise(participants = n(), mean_change = mean(change))
+```
+
+# `echo: false`
+
+The code runs, but the rendered reader sees only its output.
+
+```{r}
+#| label: demo-echo
+#| echo: false
+
+study |>
+  count(group)
+```
+
+# `eval: false`
+
+The code is displayed but not executed.
+
+```{r}
+#| label: demo-eval
+#| eval: false
+
+download.file("https://example.org/large.csv", "data/large.csv")
+```
+
+# `output: false`
+
+The code runs and creates `group_summary`, but its printed output is hidden in
+this cell.
+
+```{r}
+#| label: demo-output
+#| output: false
+
+group_summary <- study |>
+  group_by(group) |>
+  summarise(
+    participants = n(),
+    mean_change = mean(change),
+    sd_change = sd(change),
+    .groups = "drop"
+  )
+
+group_summary
+```
+
+# A labelled table
+
+The object created above is presented and numbered here.
+
+```{r}
+#| label: tbl-demo-summary
+#| tbl-cap: "Change scores by study group."
+
+knitr::kable(group_summary, digits = 1)
+```
+
+See @tbl-demo-summary.
+
+# A labelled figure
+
+```{r}
+#| label: fig-demo-change
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "Scatterplot of training hours against change score. Intervention observations generally have more hours and larger changes."
+#| fig-width: 7
+#| fig-height: 4.5
+#| dpi: 150
+
+ggplot(study, aes(training_hours, change, colour = group, shape = group)) +
+  geom_point(size = 2.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Training hours",
+    y = "Change in score",
+    colour = "Study group",
+    shape = "Study group"
+  ) +
+  theme_minimal()
+```
+
+See @fig-demo-change.
+
+# Inline computation
+
+The source inserts `nrow(study)` inline rather than typing the result:
+
+> This demonstration uses `r nrow(study)` observations and
+> `r n_distinct(study$group)` groups.
+
+# Experiments
+
+Try one change at a time and rerender:
+
+1. Add `echo: false` to the figure.
+2. Change `fig-width` and observe the legend and plotting area.
+3. Change `eval: false` to `true` in the download cell—but replace its URL with
+   a real, permitted source first.
+4. Add `code-fold: true` under the HTML format.
+5. Move `warning: false` from document YAML to one cell and compare its scope.
+

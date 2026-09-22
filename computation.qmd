@@ -1,0 +1,505 @@
+# Literate computation {#sec-computation}
+
+An executable document contains three interleaved kinds of material:
+
+1. **narrative**—the question, methods, interpretation, and limitations;
+2. **code**—instructions for reading, transforming, analysing, and presenting
+   data; and
+3. **computed output**—values, messages, tables, and figures created when the
+   document renders.
+
+The rendered document is a record of code executed in context, not a screenshot
+of an interactive session.
+
+```{r}
+#| label: workshop-demo-setup
+#| include: false
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+study <- read_csv(
+  "materials/complete/data/training-study.csv",
+  show_col_types = FALSE
+) |>
+  mutate(change = followup_score - baseline_score)
+```
+
+## Anatomy of an R cell {#sec-chunk-anatomy}
+
+An executable R cell begins with `` ```{r} `` and ends with three backticks.
+Cell options sit at the top and begin with `#|`:
+
+```r
+#| label: group-counts
+#| echo: true
+#| message: false
+
+study |>
+  count(group)
+```
+
+When this book renders, that pattern produces a live demonstration:
+
+```{r}
+#| label: demo-group-counts
+
+study |>
+  count(group)
+```
+
+The cell has:
+
+- an **engine** (`r`);
+- a **label** (`demo-group-counts`);
+- zero or more **options**;
+- R code; and
+- output generated during rendering.
+
+Labels should be unique, descriptive, and stable. Labels with reserved prefixes
+such as `fig-` and `tbl-` create cross-referenceable outputs.
+
+## The execution model
+
+For an R-based `.qmd`, Quarto asks `knitr` to execute cells from top to bottom.
+Objects created in an earlier cell are available later in that render.
+
+```r
+# Cell 1
+study <- readr::read_csv("data/training-study.csv")
+
+# Cell 2: depends on Cell 1
+nrow(study)
+```
+
+This has several consequences:
+
+- changing cell order can change whether code works;
+- a document should create every object it uses;
+- packages should be loaded or namespaced in the source;
+- interactive Global Environment objects are not reliable dependencies; and
+- restarting R before rendering is a useful test.
+
+### A common hidden-state failure
+
+Imagine running this interactively:
+
+```r
+study_with_change <- study |>
+  mutate(change = followup_score - baseline_score)
+```
+
+You then write a document cell containing only:
+
+```r
+mean(study_with_change$change)
+```
+
+It works until R is restarted. The document contains the result-producing line
+but not the instruction that creates its input. A clean render reveals the
+missing step.
+
+## Cell options control execution and presentation {#sec-cell-options}
+
+Chunk options are not cosmetic trivia. They determine what runs, what readers
+see, what can be referenced, and how output is presented.
+
+### Core execution and visibility options
+
+| Option | Typical value | Code runs? | Code shown? | Output shown? |
+|---|---:|:---:|:---:|:---:|
+| `eval` | `false` | No | Yes | No |
+| `echo` | `false` | Yes | No | Yes |
+| `output` | `false` | Yes | Yes | No |
+| `include` | `false` | Yes | No | No |
+| `warning` | `false` | Yes | As configured | Warnings hidden |
+| `message` | `false` | Yes | As configured | Messages hidden |
+| `error` | `true` | Yes | As configured | Error displayed; render continues |
+
+These options answer different questions:
+
+- **Should the code run?** `eval`
+- **Should readers see the code?** `echo`
+- **Should readers see its normal output?** `output`
+- **Should anything from the cell appear?** `include`
+- **How should diagnostics be handled?** `warning`, `message`, `error`
+
+### Default: code and output
+
+Use the default when the calculation itself is part of the explanation:
+
+```{r}
+#| label: demo-code-and-output
+
+study |>
+  summarise(
+    participants = n(),
+    mean_change = mean(change)
+  )
+```
+
+The reader can inspect the instructions and the result.
+
+### `echo: false`: show the result, hide the implementation
+
+This is common in a polished reader-facing report:
+
+```{r}
+#| label: demo-echo-false
+#| echo: false
+
+study |>
+  count(group)
+```
+
+The code still runs and remains in the `.qmd` source, but the rendered reader
+sees only the result. Hiding code is a presentation choice, not reproducibility
+by itself; the source must still be available to someone expected to audit it.
+
+### `eval: false`: show an example without running it
+
+```{r}
+#| label: demo-eval-false
+#| eval: false
+
+# An illustrative call that should not run during this render
+download.file("https://example.org/large-data.csv", "data/large-data.csv")
+```
+
+This is useful for teaching installation commands, destructive examples, slow
+jobs, or code requiring credentials. Do not use it for code that supposedly
+created the reported result.
+
+### `output: false`: run code, hide normal output
+
+```{r}
+#| label: demo-output-false
+#| output: false
+
+summary_table <- study |>
+  group_by(group) |>
+  summarise(mean_change = mean(change), .groups = "drop")
+
+summary_table
+```
+
+The object is created for later cells, and the code is visible, but the printed
+table is suppressed here.
+
+### `include: false`: setup that remains out of the document
+
+The first cell in this chapter loaded packages and data using:
+
+```r
+#| include: false
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+study <- read_csv("materials/complete/data/training-study.csv")
+```
+
+The code ran, but neither code nor output appeared. This is appropriate for
+routine setup. It is not a place to conceal analytically important decisions.
+
+### Warnings and messages
+
+Package startup messages rarely help a manuscript reader:
+
+```r
+#| message: false
+#| warning: false
+```
+
+Suppress expected noise only after understanding it. A convergence warning,
+failed transformation, or removed observation may be evidence of an analysis
+problem. Fix or explain substantive warnings rather than hiding them globally.
+
+### Folding rather than removing code
+
+HTML can keep code available without placing it in the main reading flow:
+
+```yaml
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the R code"
+```
+
+This affects HTML interaction. PDF cannot fold code, so decide separately
+whether code should be shown, hidden, or moved to an appendix.
+
+## Where options can be set
+
+Options can apply at three levels.
+
+### Project level
+
+In `_quarto.yml`:
+
+```yaml
+execute:
+  warning: false
+  message: false
+```
+
+Use project defaults for consistent policy across documents.
+
+### Document level
+
+In a document's YAML:
+
+```yaml
+---
+execute:
+  echo: true
+  warning: false
+---
+```
+
+Use document defaults for the intended audience of that document.
+
+### Cell level
+
+```r
+#| echo: false
+#| fig-width: 7
+```
+
+Cell options override broader defaults for one case. The practical precedence is:
+
+```text
+project default < document default < cell option
+```
+
+Keep exceptions local and intentional. If every cell repeats the same option,
+move it to document or project YAML.
+
+## Inline computation
+
+Inline code places a calculated value inside a sentence. The source pattern is:
+
+<code>The study contains &#96;r nrow(study)&#96; participants.</code>
+
+In this rendered chapter, the live sentence is:
+
+> The study contains `r nrow(study)` participants.
+
+Other source examples include:
+
+- The mean change was
+  <code>&#96;r round(mean(study$change), 1)&#96;</code> points.
+- There were
+  <code>&#96;r dplyr::n_distinct(study$group)&#96;</code> study groups.
+
+Use short, readable expressions inline. If a calculation is complicated, create
+a clearly named object in a cell and insert only that object:
+
+```r
+overall_mean_change <- mean(study$change)
+```
+
+The prose can then use:
+
+<code>The mean change was &#96;r round(overall_mean_change, 1)&#96; points.</code>
+
+This keeps prose readable and makes the calculation easier to test.
+
+## Figures, options, and cross-references {#sec-computational-figures}
+
+A figure cell combines execution options with publication metadata:
+
+```r
+#| label: fig-change-demo
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "Scatterplot of training hours against change score..."
+#| fig-width: 7
+#| fig-height: 4.5
+#| dpi: 300
+
+ggplot(study, aes(training_hours, change, colour = group, shape = group)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+The live output is @fig-change-demo:
+
+```{r}
+#| label: fig-change-demo
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "Scatterplot of training hours against change score. Comparison observations cluster at fewer hours and smaller changes; intervention observations generally have more hours and larger changes."
+#| fig-width: 7
+#| fig-height: 4.5
+#| dpi: 300
+
+ggplot(study, aes(training_hours, change, colour = group, shape = group)) +
+  geom_point(size = 2.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Training hours",
+    y = "Change in score",
+    colour = "Study group",
+    shape = "Study group"
+  ) +
+  theme_minimal()
+```
+
+Important figure options include:
+
+| Option | Purpose |
+|---|---|
+| `label: fig-name` | Creates a stable cross-reference target |
+| `fig-cap` | Visible caption |
+| `fig-alt` | Accessible description of information in the figure |
+| `fig-width`, `fig-height` | Size of the plotting device in inches |
+| `dpi` | Raster resolution |
+| `fig-align` | Alignment in the output |
+| `fig-show: hold` | Holds multiple plots from one cell together |
+
+Plot dimensions affect the space in which the plot is drawn, not merely how a
+finished image is stretched. Text, facets, and legends may reflow when dimensions
+change.
+
+## Tables and cross-references {#sec-computational-tables}
+
+Create the data object in code:
+
+```{r}
+#| label: create-summary-table
+#| include: false
+
+group_summary <- study |>
+  group_by(group) |>
+  summarise(
+    participants = n(),
+    mean_change = mean(change),
+    sd_change = sd(change),
+    .groups = "drop"
+  )
+```
+
+Then present it with a caption and table label:
+
+```{r}
+#| label: tbl-change-demo
+#| tbl-cap: "Change scores by study group."
+
+knitr::kable(group_summary, digits = 1)
+```
+
+@tbl-change-demo is numbered and referenced from prose. If another table is
+inserted earlier, Quarto updates the number.
+
+Keep a distinction between:
+
+- the **data object** (`group_summary`);
+- the **presentation function** (`knitr::kable()`); and
+- the **interpretation** in prose.
+
+This makes it easier to change table styling without recalculating the result.
+
+## Results produced “as is”
+
+Some R functions deliberately return Markdown or HTML. With knitr, `results:
+'asis'` or Quarto's `output: asis` can ask the renderer to interpret returned
+markup rather than print it literally.
+
+Use this only when the code is intentionally generating document structure.
+Untrusted text must not be inserted as raw HTML, and format-specific markup may
+fail in PDF or Word.
+
+## Errors during rendering
+
+By default, an error stops the render. This is usually correct: a document with a
+failed analysis should not silently produce a polished output.
+
+For a teaching document that intentionally demonstrates an error:
+
+```r
+#| error: true
+
+mean("not numeric")
+```
+
+The error appears in the rendered lesson and the document continues. Do not set
+`error: true` globally in a production manuscript merely to obtain an output.
+
+## Randomness
+
+Simulations, sampling, model initialisation, and some algorithms use random
+numbers. Without a seed, repeated renders may differ:
+
+```r
+set.seed(20260729)
+sample(1:100, 5)
+```
+
+A seed makes the pseudorandom sequence repeatable. It does not make a simulation
+design appropriate or guarantee identical results across every software
+implementation.
+
+## Caching and freezing
+
+Two related features can avoid unnecessary computation:
+
+- **cell caching** can reuse a cell's previous computational result; and
+- **Quarto freeze** can reuse rendered computational Markdown for a document.
+
+Examples:
+
+```yaml
+execute:
+  cache: true
+```
+
+```yaml
+execute:
+  freeze: auto
+```
+
+These improve rendering speed, but cached output can conceal missing external
+dependencies during testing. Before release, perform at least one clean,
+uncached render in a fresh copy or controlled environment.
+
+Never use caching as a substitute for recording inputs.
+
+## Choosing options for the reader
+
+The same analysis can be presented differently:
+
+| Audience | Reasonable presentation |
+|---|---|
+| Analyst collaborator | Show code and output |
+| Journal reader | Hide routine setup; show methods-critical code selectively |
+| Auditor or reviewer | Provide source or folded code plus environment details |
+| Student | Show starter code; reserve answers for solution output |
+| Lecture audience | Hide most code and enlarge the explanatory figure |
+
+Chunk options let one computational workflow support these audiences, but a
+document should not pretend that hidden source does not exist.
+
+## A substantial computation exercise
+
+In `manuscript.qmd`:
+
+1. Add an `include: false` setup cell that loads packages and reads the CSV.
+2. Derive `change` in code.
+3. Replace typed sample-size and group-count values with inline R.
+4. Create a summary object in a hidden setup cell.
+5. Present it in a `tbl-` cell with a caption and refer to it from prose.
+6. Create a `fig-` cell with a caption, informative alt text, explicit
+   dimensions, and both colour and shape mappings.
+7. Use `code-fold` for HTML and decide explicitly how code appears in PDF.
+8. Restart R and render without running any cells manually.
+9. Change one follow-up value in a temporary copy of the CSV and list every
+   output that updates.
+10. Restore the source data and render again.
+
+::: {.checkpoint}
+### Checkpoint
+
+You can explain the difference between `eval`, `echo`, `output`, and `include`;
+identify which cell creates every object; and trace a reported value back to the
+source data and code that generated it.
+:::

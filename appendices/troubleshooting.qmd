@@ -1,0 +1,101 @@
+# Troubleshooting
+
+## Read the first useful error
+
+Rendering errors often cascade. Start near the first line that names your
+source file, missing package, missing file, or YAML key.
+
+## `quarto: command not found`
+
+- Restart the editor or terminal after installing Quarto.
+- Confirm installation with `quarto --version`.
+- On managed university computers, Quarto may need to be installed by IT or
+  selected explicitly in the editor's preferences.
+
+## An R package is missing
+
+Run:
+
+```bash
+Rscript setup.R
+```
+
+Or install an individual package in R:
+
+```r
+install.packages("readr")
+```
+
+Restart R and render again.
+
+## The CSV cannot be found
+
+- Confirm the terminal is inside the extracted project folder.
+- Confirm `data/training-study.csv` exists.
+- Use the relative path exactly as written, including letter case.
+- Do not use `setwd()` to conceal a project-location problem.
+
+## YAML parsing fails
+
+Check:
+
+- spaces rather than tabs;
+- aligned indentation;
+- a colon after each key;
+- matching quotation marks; and
+- opening and closing `---` lines.
+
+Temporarily reduce the YAML to `title` and one `format`, render, then restore one
+option at a time.
+
+## PDF will not render {#pdf-will-not-render}
+
+1. Confirm HTML works:
+
+   ```bash
+   quarto render manuscript.qmd --to html
+   ```
+
+2. Check for a LaTeX engine:
+
+   ```bash
+   quarto check latex
+   ```
+
+3. If none is found, install TinyTeX in R:
+
+   ```r
+   install.packages("tinytex")
+   tinytex::install_tinytex()
+   ```
+
+4. Restart the editor and rerun `Rscript preflight.R`.
+
+If a managed computer blocks installation, continue with HTML and use the
+provided completed PDF during the format-comparison activity.
+
+## A figure reference shows `?`
+
+- Give the producing cell a unique label beginning with `fig-`.
+- Add `fig-cap`.
+- Refer to the label as `@fig-name`.
+- Render the entire document again.
+
+For tables, use a `tbl-` label and `tbl-cap`.
+
+
+## It worked interactively but not when rendered
+
+The interactive R session contained an object or package that the document did
+not create or load. Restart R and add the missing setup to the `.qmd` source.
+This is a useful reproducibility failure, not a reason to avoid clean sessions.
+
+## Recovery route
+
+If you fall behind:
+
+1. save your current file with a different name;
+2. copy the relevant `.qmd` from the completed project;
+3. render it to rejoin the workshop; and
+4. compare files after the session.
+

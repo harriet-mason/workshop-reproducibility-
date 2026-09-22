@@ -1,0 +1,87 @@
+# Markdown and cell-option reference
+
+## Markdown
+
+| Purpose | Source |
+|---|---|
+| Heading | `## Results` |
+| Emphasis | `*emphasis*` |
+| Strong emphasis | `**important**` |
+| Inline code | `` `manuscript.qmd` `` |
+| Link | `[label](https://example.org)` |
+| Image | `![Alt text](image.png)` |
+| Citation | `[@citation-key]` |
+| Inline equation | `$y = a + bx$` |
+| Footnote | `Statement.[^1]` |
+| Figure reference | `@fig-change` |
+| Table reference | `@tbl-summary` |
+
+Lists need a blank line before them:
+
+```markdown
+The aims are:
+
+- estimate the average change;
+- compare groups; and
+- communicate uncertainty.
+```
+
+## Code cells
+
+An executable R cell begins with `` ```{r} `` and contains:
+
+```r
+#| label: descriptive-name
+#| echo: true
+#| warning: false
+#| message: false
+
+# R code
+```
+
+| Option | Common value | Effect |
+|---|---|---|
+| `label` | `fig-change` | Identifies the cell/output |
+| `echo` | `false` | Hides source code |
+| `eval` | `false` | Displays but does not run code |
+| `include` | `false` | Runs but hides code and output |
+| `output` | `false` | Hides output |
+| `warning` | `false` | Hides R warnings |
+| `message` | `false` | Hides R messages |
+| `fig-cap` | text | Adds a caption |
+| `fig-alt` | text | Adds an accessible description |
+| `tbl-cap` | text | Adds a table caption |
+
+Labels must be unique. Use the `fig-` and `tbl-` prefixes for referenceable
+figures and tables.
+
+## YAML
+
+```yaml
+---
+title: "Document title"
+author: "Name"
+date: today
+bibliography: bibliography.bib
+format:
+  html:
+    toc: true
+  pdf:
+    number-sections: true
+execute:
+  warning: false
+  message: false
+---
+```
+
+If YAML parsing fails, check indentation, tabs, unmatched quotes, and whether
+both `---` delimiter lines are present.
+
+## Terminal commands
+
+```bash
+quarto preview
+quarto render manuscript.qmd
+quarto render manuscript.qmd --to html
+quarto render manuscript.qmd --to pdf
+```

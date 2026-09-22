@@ -1,0 +1,140 @@
+/*-- scss:defaults --*/
+$primary: #315b7d;
+$link-color: #165f8c;
+$code-color: #7a1e48;
+$font-size-root: 17px;
+
+/*-- scss:rules --*/
+.hero {
+  padding: 1.5rem 1.75rem;
+  margin: 1rem 0 2rem;
+  border-left: 0.45rem solid #315b7d;
+  background: #eef4f8;
+  border-radius: 0.25rem;
+}
+
+.try-it,
+.checkpoint,
+.discussion,
+.early {
+  margin: 1.25rem 0;
+  padding: 1rem 1.15rem;
+  border-left: 0.35rem solid;
+  border-radius: 0.25rem;
+}
+
+.try-it {
+  border-color: #1c6e3e;
+  background: #edf7f0;
+}
+
+.checkpoint {
+  border-color: #9a6700;
+  background: #fff7df;
+}
+
+.discussion {
+  border-color: #6554c0;
+  background: #f3f0ff;
+}
+
+.early {
+  border-color: #337a87;
+  background: #ebf7f8;
+}
+
+.try-it > :first-child,
+.checkpoint > :first-child,
+.discussion > :first-child,
+.early > :first-child {
+  margin-top: 0;
+}
+
+.time {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  margin-left: 0.25rem;
+  color: #fff;
+  background: #315b7d;
+  border-radius: 0.25rem;
+  font-size: 0.82em;
+  font-weight: 600;
+}
+
+table {
+  font-size: 0.95em;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+.small {
+  font-size: 0.9em;
+}
+
+.writing-demo,
+.output-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+.demo-source,
+.demo-output,
+.gallery-item {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #cbd6df;
+  border-radius: 0.3rem;
+  background: #fff;
+}
+
+.demo-source {
+  background: #f6f8fa;
+}
+
+.demo-source > :first-child,
+.demo-output > :first-child,
+.gallery-item > :first-child {
+  margin-top: 0;
+}
+
+.gallery-item img {
+  width: 100%;
+  border: 1px solid #d8dee4;
+  border-radius: 0.2rem;
+}
+
+.handoff-story {
+  padding: 1.1rem 1.25rem;
+  margin: 1.25rem 0;
+  border: 1px solid #d7c7a4;
+  border-left: 0.4rem solid #9a6700;
+  border-radius: 0.25rem;
+  background: #fffaf0;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 1rem;
+  }
+
+  .try-it,
+  .checkpoint,
+  .discussion,
+  .early {
+    padding: 0.8rem;
+  }
+
+  .writing-demo,
+  .output-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+.unlabelled-heading {
+  font-weight: 600;
+  font-size: calc(1.27rem + 0.24vw);
+}

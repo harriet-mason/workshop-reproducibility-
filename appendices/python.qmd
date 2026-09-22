@@ -1,0 +1,73 @@
+# Python and Jupyter translation
+
+The live workshop uses R so the room can share one execution path. Quarto also
+supports Python through Jupyter.
+
+## Preflight
+
+Check Python and Jupyter:
+
+```bash
+python --version
+quarto check jupyter
+```
+
+Create an environment using your organisation's preferred tool, then install:
+
+```bash
+python -m pip install jupyter pandas matplotlib
+```
+
+Environment creation and dependency locking differ among `venv`, Conda, Poetry,
+and `uv`; follow local policy rather than mixing them casually.
+
+## Python cell
+
+In an executable Python cell, write:
+
+```python
+#| label: load-data-python
+
+import pandas as pd
+
+study = pd.read_csv("data/training-study.csv")
+study["change"] = study["followup_score"] - study["baseline_score"]
+```
+
+A `.qmd` file containing Python cells uses the Jupyter engine unless another
+engine is selected explicitly.
+
+## Inline Python
+
+Type the following sentence (the backticks are part of the source):
+
+<code>The study contains &#96;{python} len(study)&#96; participants.</code>
+
+## Figure
+
+```python
+#| label: fig-change-python
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "Scatterplot of training hours against change score."
+
+import matplotlib.pyplot as plt
+
+for name, group in study.groupby("group"):
+    plt.scatter(group["training_hours"], group["change"], label=name)
+plt.xlabel("Training hours")
+plt.ylabel("Change score")
+plt.legend()
+```
+
+## Concepts that transfer directly
+
+- Markdown and YAML
+- relative paths
+- source/output separation
+- cell labels and most presentation options
+- citations and cross-references
+- HTML, PDF, and RevealJS formats
+- clean-session rendering
+
+The main differences are environment management, package APIs, and the
+computational engine.

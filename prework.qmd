@@ -1,0 +1,88 @@
+# Before the workshop
+
+Complete this page before the session. The workshop starts from a working
+installation rather than spending teaching time on downloads.
+
+## Install the tools
+
+You need:
+
+1. **Quarto {{< var workshop.quarto-version >}}** from
+   [quarto.org](https://quarto.org/docs/get-started/).
+2. **R 4.3 or later** from [CRAN](https://cran.r-project.org/).
+3. An editor with Quarto support: RStudio, Positron, or VS Code.
+4. A LaTeX installation for PDF. TinyTeX is the smallest supported route for
+   most participants.
+
+If you do not already have TinyTeX, run this once in R:
+
+```r
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
+Restart your editor after installing Quarto or TinyTeX.
+
+## Prepare the project
+
+1. Download the [starter
+   project](materials/downloads/quarto-workshop-starter.zip).
+2. Extract it to a short, writable path.
+3. Open the extracted folder as an RStudio/Positron/VS Code project or workspace.
+4. Open a terminal **inside that folder**.
+
+Do not work inside the zip file, a mail attachment preview, or a temporary
+downloads viewer.
+
+## Install the R packages
+
+From the project terminal, run:
+
+```bash
+Rscript setup.R
+```
+
+This installs only packages that are missing: `knitr`, `rmarkdown`, `readr`,
+`dplyr`, and `ggplot2`.
+
+## Run the preflight
+
+```bash
+Rscript preflight.R
+```
+
+The check reports:
+
+- Quarto and R versions;
+- required R packages;
+- a detected LaTeX engine; and
+- whether a tiny HTML and PDF document can render.
+
+::: {.checkpoint}
+### Checkpoint <span class="time">before arrival</span>
+
+The final line reads `Preflight passed`. If HTML works but PDF fails, follow the
+[PDF troubleshooting steps](appendices/troubleshooting.qmd#pdf-will-not-render)
+before the workshop.
+:::
+
+## Make the first render
+
+```bash
+quarto render manuscript.qmd --to html
+```
+
+Open `manuscript.html`. It will be incomplete—that is intentional—but it should
+contain a title, introduction, and activity placeholders.
+
+::: {.callout-note}
+You can use your editor's **Render** button instead of the terminal. The workshop
+shows terminal commands because they behave consistently across editors.
+:::
+
+## Bring on the day
+
+- the extracted starter project;
+- the completed preflight result; and
+- your laptop and power adapter
+

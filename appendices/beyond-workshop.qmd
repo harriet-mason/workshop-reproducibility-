@@ -1,0 +1,53 @@
+# Beyond the workshop
+
+These tools strengthen the workflow but are intentionally outside the live
+three-hour session.
+
+## Git
+
+Git records source changes and supports collaboration. Start by tracking source
+files, data that may be shared legally, the bibliography, and `_extensions`.
+Ignore generated output unless a publishing workflow requires it.
+
+Never commit credentials, confidential data, or files you do not have permission
+to distribute.
+
+## `renv`
+
+For an R project:
+
+```r
+install.packages("renv")
+renv::init()
+renv::snapshot()
+```
+
+This creates a lockfile describing package versions. Collaborators can use
+`renv::restore()`. Review organisational policy before committing package
+archives or configuring private repositories.
+
+## Automated rendering
+
+A continuous-integration job can:
+
+1. restore dependencies;
+2. run `quarto render`;
+3. fail when code or references break; and
+4. publish validated static output.
+
+Automation is most useful after the project renders reliably on a clean local
+session.
+
+## Quarto manuscripts
+
+Quarto manuscript projects connect an article, computational notebooks, and
+multiple output formats. They are useful when the computational record itself is
+part of the publication.
+
+## Parameters and profiles
+
+Parameters can create repeated reports for different cohorts or datasets.
+Profiles can change configuration for student, solution, draft, and production
+builds. Prefer these mechanisms once repeated manual switches are causing real
+errors.
+

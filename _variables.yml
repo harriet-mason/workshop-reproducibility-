@@ -1,0 +1,8 @@
+workshop:
+  title: "Reproducible Writing with Quarto"
+  institution: "Monash University"
+  presenter: "Harriet Mason"
+  date: today
+  contact: "harriet.mason1@monash.edu"
+  quarto-version: "1.9 or later"
+

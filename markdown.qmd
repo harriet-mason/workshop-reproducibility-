@@ -1,0 +1,454 @@
+# Writing in Markdown {#sec-markdown}
+
+Markdown is plain text with punctuation that describes **structure** rather than
+appearance. You identify something as a heading, quotation, citation, or code
+expression; the output format decides how that structure should look.
+
+That separation is what allows the same source to become a web page, PDF,
+Word document, book chapter, slide deck, or tutorial.
+
+## Source versus appearance
+
+In a word processor, “make this 18-point bold” is a visual instruction. In
+Markdown, `## Methods` says “this is a second-level heading.” Quarto can then:
+
+- number it in a PDF;
+- put it in an HTML table of contents;
+- turn it into a slide boundary;
+- include it in navigation; and
+- give it an address for cross-referencing.
+
+Semantic structure is both more reusable and more accessible than manual visual
+formatting.
+
+## Document metadata
+
+A Quarto document begins with YAML metadata between `---` lines:
+
+```yaml
+---
+title: "A reproducible analysis"
+subtitle: "A synthetic training study"
+author: "A. Researcher"
+date: today
+bibliography: bibliography.bib
+format:
+  html:
+    toc: true
+  pdf:
+    number-sections: true
+---
+```
+
+The YAML is configuration. It answers questions such as:
+
+- What is the document called?
+- Who wrote it?
+- Which bibliography should be used?
+- Which outputs should be created?
+- Which options differ between those outputs?
+
+Indentation defines nesting:
+
+```yaml
+format:
+  html:             # belongs under format
+    toc: true       # belongs under html
+  pdf:              # also belongs under format
+    number-sections: true
+```
+
+If `toc` were aligned with `format`, it would have a different scope.
+
+## Headings create document structure
+
+Use one `#` for a level-one heading, two for level two, and so on:
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+# Introduction
+
+## Background
+
+## Research question
+
+# Methods
+
+## Data
+
+## Analysis
+```
+:::
+
+::: {.demo-output}
+**Rendered structure**
+
+```text
+1 Introduction
+  1.1 Background
+  1.2 Research question
+2 Methods
+  2.1 Data
+  2.2 Analysis
+```
+
+The precise numbering and typography come from the output format.
+:::
+:::
+
+Do not skip from `#` to `###` simply because you prefer the smaller font. That
+creates a broken outline for navigation and assistive technology. Change the
+*theme* if the visual design needs adjustment (more on this later).
+
+## Section numbering and cross-references {#sec-section-crossrefs}
+
+Turn on numbering for an output:
+
+```yaml
+format:
+  html:
+    number-sections: true
+  pdf:
+    number-sections: true
+```
+
+Give a heading a stable identifier:
+
+```markdown
+## Statistical analysis {#sec-statistical-analysis}
+```
+
+Refer to it with:
+
+```markdown
+The model specification is described in @sec-statistical-analysis.
+```
+
+Quarto writes “Section 3.2” or the appropriate number. If the section moves,
+the reference updates automatically.
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+## Data preparation {#sec-data-preparation}
+
+Missing values were retained for descriptive checks.
+
+## Statistical analysis
+
+See @sec-data-preparation before fitting the model.
+```
+:::
+
+::: {.demo-output}
+**Rendered idea**
+
+> **3.1 Data preparation**  
+> Missing values were retained for descriptive checks.
+>
+> **3.2 Statistical analysis**  
+> See **Section 3.1** before fitting the model.
+:::
+:::
+
+Stable identifiers are better than writing “see the section above” or manually
+typing “Section 3.1”. Use short, descriptive, lowercase labels separated by
+hyphens.
+
+Quarto uses the same system for sections, figures, tables, equations, listings,
+and exercises:
+
+| Object | Label prefix | Reference |
+|---|---|---|
+| Section | `sec-` | `@sec-methods` |
+| Figure | `fig-` | `@fig-change` |
+| Table | `tbl-` | `@tbl-summary` |
+| Equation | `eq-` | `@eq-change` |
+| Listing | `lst-` | `@lst-model` |
+
+## Paragraphs and emphasis
+
+A blank line starts a new paragraph. A single line break in the source normally
+continues the same paragraph, allowing you to wrap source text without changing
+the rendered prose.
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+This is one paragraph even though the
+source wraps across two lines.
+
+This is a new paragraph with *emphasis*,
+**strong emphasis**, and `inline code`.
+```
+:::
+
+::: {.demo-output}
+**Rendered**
+
+This is one paragraph even though the
+source wraps across two lines.
+
+This is a new paragraph with *emphasis*,
+**strong emphasis**, and `inline code`.
+:::
+:::
+
+Use emphasis to convey meaning, not to simulate headings. Backticks are useful
+for filenames, functions, variables, and short commands.
+
+## Lists
+
+Unordered lists use `-`; ordered lists use `1.`. Markdown can number ordered
+lists automatically:
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+The analysis will:
+
+- read the source data;
+- derive the change score; and
+- produce a figure.
+
+The reader should:
+
+1. open the project;
+1. render the manuscript;
+1. inspect the output.
+```
+:::
+
+::: {.demo-output}
+**Rendered**
+
+The analysis will:
+
+- read the source data;
+- derive the change score; and
+- produce a figure.
+
+The reader should:
+
+1. open the project;
+2. render the manuscript;
+3. inspect the output.
+:::
+:::
+
+Using `1.` for every ordered item makes rearranging source easier. Use explicit
+numbers only when the source number itself matters.
+
+## Links, images, and footnotes
+
+```markdown
+[Quarto documentation](https://quarto.org/docs/guide/)
+
+![A concise description of the image](images/result.png)
+
+This claim needs a qualification.[^qualification]
+
+[^qualification]: The data are synthetic and illustrate workflow only.
+```
+
+Good link text tells the reader where the link goes. Avoid “click here”.
+
+Image text inside `![...]` becomes alternative text. Describe the information a
+reader needs, not merely the filename or “image of a graph”.
+
+Footnotes are appropriate for supplementary explanation. If information is
+central to interpreting the result, keep it in the main text.
+
+## Quotations and block quotes
+
+Prefix quoted paragraphs with `>`:
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+> Reproducibility is a property of a
+> workflow, not simply a file format.
+```
+:::
+
+::: {.demo-output}
+**Rendered**
+
+> Reproducibility is a property of a
+> workflow, not simply a file format.
+:::
+:::
+
+For published words, include a citation and page or section locator where
+appropriate. Markdown syntax does not remove scholarly attribution
+requirements.
+
+## Callouts
+
+Callouts separate warnings, definitions, tips, or assumptions from the main
+narrative:
+
+````markdown
+::: {.callout-warning}
+The data are synthetic and must not be interpreted as evidence.
+:::
+````
+
+::: {.callout-warning}
+The data are synthetic and must not be interpreted as evidence.
+:::
+
+Common types are `note`, `tip`, `important`, `warning`, and `caution`. A callout
+should add meaning, not turn every paragraph into a coloured box.
+
+## Tables written in Markdown
+
+Small, static tables can be written directly:
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+| Format | Best suited to |
+|---|---|
+| HTML | Browsing and interaction |
+| PDF | Fixed-page distribution |
+| DOCX | Editorial workflows |
+```
+:::
+
+::: {.demo-output}
+**Rendered**
+
+| Format | Best suited to |
+|---|---|
+| HTML | Browsing and interaction |
+| PDF | Fixed-page distribution |
+| DOCX | Editorial workflows |
+:::
+:::
+
+Use a code-generated table when values come from data. A hand-written Markdown
+table is appropriate for stable explanatory content such as option summaries.
+
+## Mathematics and numbered equations
+
+Inline mathematics uses one pair of dollar signs:
+
+```markdown
+The individual change is $\Delta_i = y_{i1} - y_{i0}$.
+```
+
+The rendered result is: the individual change is
+$\Delta_i = y_{i1} - y_{i0}$.
+
+A display equation uses `$$`. Add a label inside braces for numbering and
+cross-referencing:
+
+```markdown
+$$
+\bar{\Delta}_g =
+\frac{1}{n_g}\sum_{i=1}^{n_g}\Delta_i
+$$ {#eq-group-change}
+
+Group means are defined in @eq-group-change.
+```
+
+$$
+\bar{\Delta}_g =
+\frac{1}{n_g}\sum_{i=1}^{n_g}\Delta_i
+$$ {#eq-group-change}
+
+Group means are defined in @eq-group-change.
+
+## Citations and bibliographies {#sec-citations}
+
+Bibliographic records live in `bibliography.bib`. A record has a citation key:
+
+```bibtex
+@article{knuth1984,
+  author = {Knuth, Donald E.},
+  title = {Literate Programming},
+  year = {1984}
+}
+```
+
+Use the key in prose:
+
+::: {.writing-demo}
+::: {.demo-source}
+**Source**
+
+```markdown
+Literate programming was formalised by
+@knuth1984.
+
+Reproducibility requires more than
+retaining code [@sandve2013].
+```
+:::
+
+::: {.demo-output}
+**Rendered**
+
+Literate programming was formalised by @knuth1984.
+
+Reproducibility requires more than retaining code [@sandve2013].
+:::
+:::
+
+Quarto formats the citation and builds the reference list. A Citation Style
+Language (`.csl`) file can change the style without rewriting citations.
+
+Useful citation patterns include:
+
+```markdown
+[@knuth1984]                 # parenthetical
+@knuth1984                  # textual author
+[@knuth1984, pp. 100–102]   # locator
+[@knuth1984; @sandve2013]   # multiple sources
+```
+
+The bibliography automates formatting, not source evaluation. Check names,
+titles, dates, identifiers, and whether the cited source supports the claim.
+
+Probably the easiest way to get bib keys is from [Zotero](https://www.zotero.org/) and the [Better BibTeX extension](https://retorque.re/zotero-better-bibtex/) which can export the required format for a `.bib` file automatically.
+
+## A fuller Markdown exercise
+
+In `manuscript.qmd`:
+
+1. Complete the title, subtitle, author, and output options in YAML.
+2. Create Introduction, Methods, Results, Discussion, and References sections.
+3. Add stable `sec-` identifiers to Methods and Results.
+4. Refer to Methods from the Results prose.
+5. Add a research question, bulleted aims, and the numbered change-score
+   equation.
+6. Add one citation, one footnote, one link, and one warning callout.
+7. Render to HTML and inspect the table of contents, numbering, and references.
+8. Render to PDF and identify what changed visually and what remained
+   semantically the same.
+
+::: {.checkpoint}
+### Checkpoint
+
+The source contains structure rather than manual styling. Headings appear in
+navigation, section and equation references update automatically, and citations
+are generated from the bibliography.
+:::
+
+@sec-computation applies the same source-to-output principle to calculated
+values, figures, and tables.
+

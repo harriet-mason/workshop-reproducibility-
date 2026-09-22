@@ -1,0 +1,134 @@
+---
+title: "A reproducible analysis"
+subtitle: "Change scores in a synthetic training study"
+author: "Workshop participant"
+date: today
+bibliography: bibliography.bib
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+    html-math-method: mathml
+  pdf:
+    number-sections: true
+execute:
+  warning: false
+  message: false
+---
+
+# Introduction
+
+Literate programming keeps explanation and computation in the same source
+document [@knuth1984]. This reduces opportunities for reported values, figures,
+and tables to become detached from the analysis that produced them.
+
+## Research question
+
+How did scores change between baseline and follow-up, and how did the descriptive
+change differ between the comparison and intervention groups?
+
+The analysis aims to:
+
+- calculate an individual change score;
+- summarise change within each study group; and
+- visualise the association between training hours and change.
+
+For participant $i$, the change score is:
+
+$$
+\Delta_i = y_{i,\mathrm{followup}} - y_{i,\mathrm{baseline}}.
+$$
+
+::: {.callout-note}
+The data are entirely synthetic. They contain no real participants and cannot
+provide evidence about a real intervention.
+:::
+
+# Methods
+
+The CSV is read from a relative path, and the change score is derived in code.
+
+```{r}
+#| label: load-and-prepare
+#| include: false
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+study <- read_csv("data/training-study.csv", show_col_types = FALSE) |>
+  mutate(change = followup_score - baseline_score)
+```
+
+The dataset contains `r nrow(study)` fictional participants, with
+`r sum(study$group == "comparison")` in the comparison group and
+`r sum(study$group == "intervention")` in the intervention group.
+
+# Results
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Change scores by study group."
+
+summary_table <- study |>
+  group_by(group) |>
+  summarise(
+    participants = n(),
+    mean_change = mean(change),
+    sd_change = sd(change),
+    .groups = "drop"
+  )
+
+knitr::kable(summary_table, digits = 1)
+```
+
+@tbl-summary shows a larger average change in the intervention group than in
+the comparison group.
+
+```{r}
+#| label: fig-change
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "Scatterplot of training hours against change score. Comparison observations cluster at fewer hours and smaller changes; intervention observations generally have more hours and larger changes."
+
+ggplot(study, aes(training_hours, change, colour = group, shape = group)) +
+  geom_point(size = 2.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Training hours",
+    y = "Change in score",
+    colour = "Study group",
+    shape = "Study group"
+  ) +
+  theme_minimal()
+```
+
+The constructed relationship in @fig-change shows that group membership,
+training hours, and change are all associated in this synthetic dataset.
+
+# Discussion
+
+The intervention group has the larger descriptive mean change. This comparison
+does not establish that the intervention caused the difference: the data are
+synthetic, participants were not randomised, and training hours differ
+systematically between groups. A real analysis would require a design-appropriate
+model, uncertainty estimates, and substantive assessment of possible
+confounding.
+
+Reproducible computation keeps the numerical summary aligned with the source
+data, but it does not remove the author's responsibility for design,
+interpretation, or transparent limitations [@sandve2013].
+
+# Reproducibility
+
+The source data, transformations, prose, and output instructions are stored in
+one project. The following information records the R environment used for this
+render.
+
+```{r}
+#| label: session-information
+#| code-fold: true
+sessionInfo()
+```
+
+# References

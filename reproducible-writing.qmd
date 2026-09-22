@@ -1,0 +1,305 @@
+# Reproducible writing {#sec-reproducible-writing}
+
+Reproducible writing is the practice of keeping claims, calculations, figures,
+tables, and their sources connected closely enough that the document can be
+rebuilt and checked. Quarto provides the machinery; good project habits make the
+machinery portable.
+
+## A familiar handoff
+
+::: {.handoff-story}
+[“It works on my computer”]{.unlabelled-heading}
+
+A colleague sends you a folder called `final_analysis_revised_3`. Their email
+says:
+
+> Open `analysis.R`, change the first `setwd()` line to wherever you saved the
+> folder, run lines 1–287, ignore the warnings, then open `paper.docx`. Figure 2
+> should match the plot in the `figures-old` folder, except the number in the
+> Results section was updated manually.
+
+Before checking the research, you must reconstruct the colleague's computer:
+their folders, execution order, interactive objects, package versions, and
+copy-and-paste history. Even if every statistical command is correct, the
+handoff is fragile.
+:::
+
+Most researchers have either received a project like this or created one under
+deadline pressure. Reproducible writing tries to make the handoff instead:
+
+```text
+1. Open the project folder.
+2. Install the documented requirements.
+3. Render manuscript.qmd.
+4. Inspect the source, output, and any reported differences.
+```
+
+That is a much smaller and testable process.
+
+## Source, process, and output
+
+Literate programming places human explanation and executable instructions in
+one source document [@knuth1984]. Quarto coordinates the rendering process:
+
+```text
+source data + .qmd + software environment
+                    |
+                 render
+                    |
+          HTML / PDF / Word / slides / tutorials
+```
+
+The rendered PDF is not the reproducible object by itself. It is evidence that a
+particular source was rendered in a particular environment. The useful object
+to share is the project that can recreate it.
+
+This changes the role of common files:
+
+| File | Role | Usually edited by |
+|---|---|---|
+| `data/training-study.csv` | Input | Data producer or documented cleaning step |
+| `manuscript.qmd` | Narrative and analysis instructions | Author |
+| `bibliography.bib` | Citation metadata | Author/reference manager |
+| `manuscript.html` | Rendered product | Quarto |
+| `manuscript.pdf` | Rendered product | Quarto and LaTeX |
+
+If a rendered product looks wrong, repair the source or process and render
+again. **Editing the product directly creates an undocumented fork.**
+
+## Why absolute paths fail {#sec-absolute-paths}
+
+An absolute path starts from a computer-specific root:
+
+```r
+# macOS
+readr::read_csv("/Users/alex/Desktop/project/data/results.csv")
+
+# Windows
+readr::read_csv("C:/Users/alex/OneDrive - University/project/data/results.csv")
+
+# Linux or a research server
+readr::read_csv("/home/alex/projects/project/data/results.csv")
+```
+
+The path may be correct today, but it encodes facts that are not properties of
+the research:
+
+- the operating system;
+- the author's username;
+- the name of a university or cloud-storage service;
+- where the author happened to save the project;
+- which drive or network mount was available; and
+- sometimes confidential project, client, or participant names.
+
+When someone else receives the project, at least one of those facts changes.
+The code fails before it reaches the analysis.
+
+### The same author can still break it
+
+Absolute paths are not only a collaboration problem. They fail when you:
+
+- move the project from Downloads to Documents;
+- rename a parent folder;
+- switch from a desktop to a laptop;
+- restore from a backup;
+- run on a high-performance computer;
+- change institutions or cloud-storage accounts; or
+- ask an automated build service to render the document.
+
+An absolute path is therefore a claim that *this project will always live in
+this exact location on this exact kind of machine*.
+
+### `setwd()` moves the problem
+
+A common repair is:
+
+```r
+setwd("/Users/alex/Desktop/project")
+```
+
+The remaining paths may now look relative, but every collaborator still has to
+edit the script before it can run. Worse, `setwd()` changes global session state:
+later code depends on whether that line ran and what the working directory was
+beforehand.
+
+Opening a project establishes one shared root without hard-coding each user's
+computer.
+
+### Relative paths are the solution
+
+Inside the workshop project, write:
+
+```r
+readr::read_csv("data/training-study.csv")
+```
+
+This path means:
+
+1. start from the project root;
+2. enter the `data` folder; and
+3. open `training-study.csv`.
+
+It describes the relationship between files, which remains true when the whole
+project is moved.
+
+| Path | Meaning |
+|---|---|
+| `data/file.csv` | A file below the project root |
+| `figures/result.png` | A generated or supplied figure folder |
+| `scripts/clean.R` | A script below the root |
+| `../shared/file.csv` | A file outside the project — portable only if that surrounding structure is also shared |
+| `/data/file.csv` | An absolute path from the filesystem root, not the project |
+
+::: {.callout-warning}
+## Relative does not mean “any path without a username”
+
+`../someone-elses-folder/data.csv` is syntactically relative but still depends
+on a directory outside the shared project. Prefer keeping shareable inputs inside
+the project, or document and validate the external data location explicitly.
+:::
+
+## The project root
+
+Your editor and Quarto need a stable answer to “relative to what?” For this
+workshop, the extracted folder containing `_quarto.yml` is the project root:
+
+```text
+quarto-workshop-starter/
+├── _quarto.yml
+├── manuscript.qmd
+├── bibliography.bib
+├── data/
+│   ├── training-study.csv
+│   └── README.md
+└── _extensions/
+```
+
+Open the **folder**, not just an isolated `.qmd` file. Run terminal commands from
+that folder. Quarto then has a consistent base for documents and resources.
+
+You can see R's current working directory with:
+
+```r
+getwd()
+```
+
+Use this for diagnosis, not as a value to copy into `setwd()`.
+
+## Separate inputs from products
+
+A project becomes easier to understand when its folders communicate intent:
+
+```text
+project/
+├── data/          # original or documented inputs
+├── R/             # reusable functions, if the project grows
+├── figures/       # supplied figures; generated figures may be temporary
+├── manuscript.qmd # source
+├── bibliography.bib
+└── README.md      # how to reproduce the project
+```
+
+Useful rules are:
+
+- do not overwrite raw inputs during analysis;
+- derive cleaned variables in code;
+- give files stable, descriptive names;
+- keep secrets and confidential data out of distributable projects;
+- avoid folders named only `old`, `new`, `final`, or `misc`; and
+- make it obvious which files are sources and which are generated.
+
+## Four layers of reproducibility
+
+Keeping data and code together is necessary but not sufficient.
+
+### 1. Computational
+
+Can the recorded instructions recreate the values, figures, and tables?
+
+Common failures include missing code, interactive objects, manual spreadsheet
+edits, and undocumented execution order.
+
+### 2. Environmental
+
+Can the instructions run with the available versions of R, packages, Quarto,
+LaTeX, and system libraries?
+
+The workshop records `sessionInfo()`. Package lockfiles such as `renv` provide a
+stronger environment specification.
+
+### 3. Provenance
+
+Can a reader identify where data and external information came from, what was
+changed, and under what permissions?
+
+A mysterious `final.csv` is not made trustworthy merely by reading it with
+reproducible code.
+
+### 4. Narrative
+
+Do the prose, captions, and conclusions accurately describe the computations?
+
+Code can keep `n = 40` synchronised with a dataset. It cannot decide whether a
+causal claim is justified. Reproducibility makes reasoning inspectable; it does
+not replace judgement.
+
+## Clean sessions expose hidden dependencies
+
+Suppose you created `study_clean` interactively yesterday, then wrote:
+
+```r
+mean(study_clean$change)
+```
+
+The line works while that object remains in your Global Environment. It fails on
+a colleague's computer because the document never creates `study_clean`.
+
+A clean render starts a new execution context and runs the document in order.
+This exposes:
+
+- missing package calls;
+- objects created only interactively;
+- files read from the wrong location;
+- dependence on a particular execution order; and
+- values copied rather than calculated.
+
+The failure is useful evidence about what the source has not yet documented.
+
+## A practical handoff contract
+
+Before sharing a project, ask whether a colleague can answer:
+
+1. Which file should I open first?
+2. Where are the inputs, and may they be shared?
+3. Which command recreates the outputs?
+4. Which software and packages are required?
+5. Which files should never be edited manually?
+6. What result should I see if the render succeeds?
+
+The workshop's `README.md`, `setup.R`, `preflight.R`, and `.qmd` sources provide
+those answers at a modest level. More complex projects may add a package
+lockfile, tests, workflow manager, or container.
+
+## Try the handoff yourself
+
+Open `manuscript.qmd` and `data/training-study.csv`.
+
+1. Find the code that reads the CSV.
+2. Confirm that the path contains no username or drive letter.
+3. Move a **copy of the entire project folder** to a different location.
+4. Open the copied folder as a project and render the manuscript.
+5. Move only `manuscript.qmd` without its project and observe what is missing.
+6. Explain why the first move succeeds and the second is not a complete handoff.
+
+::: {.checkpoint}
+### Checkpoint
+
+You should be able to describe the project as a self-contained set of
+relationships between files—not as a folder that happens to work from one
+person's Desktop.
+:::
+
+In @sec-markdown we turn the narrative itself into structured, portable source.
+In @sec-computation we make calculated values and outputs part of the same
+rendering process.
+

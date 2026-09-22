@@ -1,0 +1,56 @@
+# Next steps
+
+## Apply the workflow to real work
+
+Choose one modest document rather than migrating an entire research programme.
+A useful first project has:
+
+- one or two input files;
+- a calculation you currently repeat;
+- at least one figure or table; and
+- a clear reader and output format.
+
+Rebuild it as a project with source data, a `.qmd` file, a bibliography, and a
+short setup note.
+
+## Add safeguards when they solve a problem
+
+Possible next layers include:
+
+- Git for change history and collaboration;
+- `renv` for an R package lockfile;
+- automated rendering in continuous integration;
+- parameterised reports;
+- Quarto manuscripts and journal extensions;
+- project profiles for student and solution variants;
+- a shared institutional theme; and
+- publishing to an internal server or static host.
+
+The [Beyond the workshop](appendices/beyond-workshop.qmd) appendix gives a
+starting point without making these tools prerequisites.
+
+## Keep these habits
+
+1. Treat rendered documents as products, not the primary source.
+2. Keep inputs immutable and transformations explicit.
+3. Prefer relative paths.
+4. Render from a clean session regularly.
+5. Separate computation from claims: code updates numbers, authors remain
+   responsible for interpretation.
+6. Preserve enough environment information for another person to diagnose a
+   failed rerun.
+
+## Resources
+
+- [Quarto guide](https://quarto.org/docs/guide/)
+- [Quarto computations](https://quarto.org/docs/computations/)
+- [Quarto journal articles](https://quarto.org/docs/journals/)
+- [Quarto presentations](https://quarto.org/docs/presentations/)
+- [`unilur` extension](https://github.com/ginolhac/unilur)
+
+::: {.callout-tip}
+Copy the completed project, rename the copy, replace the synthetic CSV with your
+own documented data, and change one section at a time. Keep the original as a
+known-working reference.
+:::
+

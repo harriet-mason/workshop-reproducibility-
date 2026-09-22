@@ -1,0 +1,99 @@
+---
+title: "A reproducible analysis"
+subtitle: "TODO: describe the study"
+author: "TODO: your name"
+date: today
+bibliography: bibliography.bib
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+    html-math-method: mathml
+  pdf:
+    number-sections: true
+execute:
+  warning: false
+  message: false
+---
+
+# Introduction
+
+This manuscript uses a synthetic training study to practise reproducible
+writing. Literate programming keeps explanation and computation together.
+
+<!-- TODO (Markdown activity):
+- Add a Research question heading and one-sentence question.
+- Add a bulleted list of aims.
+- Add the displayed change-score equation.
+- Cite @knuth1984.
+- Add a callout noting that the data are synthetic.
+-->
+
+# Methods
+
+The dataset contains 40 fictional participants. It is stored inside the project
+so the document does not depend on an external download.
+
+```{r}
+#| label: load-and-prepare
+#| include: false
+
+# TODO (computation activity):
+# 1. Load readr, dplyr, and ggplot2.
+# 2. Read data/training-study.csv into an object named study.
+# 3. Create change = followup_score - baseline_score.
+```
+
+<!-- TODO: Replace the typed participant count above with inline R. -->
+
+# Results
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: "Change scores by study group."
+#| eval: false
+
+# TODO:
+# summary_table <- study |>
+#   group_by(group) |>
+#   summarise(
+#     participants = n(),
+#     mean_change = mean(change),
+#     sd_change = sd(change)
+#   )
+#
+# knitr::kable(summary_table, digits = 1)
+```
+
+```{r}
+#| label: fig-change
+#| fig-cap: "Change score by training hours and study group."
+#| fig-alt: "TODO: describe the variables and visible pattern."
+#| eval: false
+
+# TODO:
+# ggplot(study, aes(training_hours, change, colour = group)) +
+#   geom_point(size = 2) +
+#   geom_smooth(method = "lm", se = FALSE) +
+#   labs(
+#     x = "Training hours",
+#     y = "Change in score",
+#     colour = "Study group"
+#   ) +
+#   theme_minimal()
+```
+
+<!-- TODO: Add prose that refers to @tbl-summary and @fig-change. -->
+
+# Discussion
+
+TODO: Distinguish the descriptive result from a causal conclusion and name one
+limitation of the synthetic study.
+
+# Reproducibility
+
+The source data, transformations, prose, and output instructions are stored in
+one project. The completed document records session information here.
+
+# References

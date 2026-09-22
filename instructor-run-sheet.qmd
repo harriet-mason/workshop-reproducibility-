@@ -1,0 +1,133 @@
+---
+title: "Instructor run sheet"
+subtitle: "Reproducible Writing with Quarto"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+# Purpose
+
+This is the facilitator-facing companion to the participant book. The chapters
+now deliberately contain more explanation and demonstration material than most
+groups will cover live. Select the examples that suit the audience and revise
+the schedule below before delivery; the cues, checkpoints, and recovery routes
+can still be used independently of the timings.
+
+# Before the day
+
+- Replace the values in `_variables.yml`.
+- Render the book and both participant projects from a fresh directory.
+- Open every download archive and test the preflight.
+- Confirm the room can access the static book and a backup USB/local copy.
+- Bring pre-rendered manuscript, tutorial, slide, and Elsevier outputs.
+- Ask participants to complete the prework at least two working days beforehand.
+- Arrange a helper if the room has more than about 20 participants.
+- Do not update Quarto, R packages, or extensions on the morning of delivery.
+
+# Adaptable delivery outline
+
+## 00:00–00:10 — Setup checkpoint
+
+**Say:** “Today is about the source-to-output loop. Installation is prework; our
+first goal is a successful render.”
+
+1. Confirm everyone extracted the starter zip.
+2. Run `Rscript preflight.R`.
+3. Render `manuscript.qmd` to HTML.
+4. Pair anyone with installation trouble and move the room on at minute 10.
+
+**Checkpoint:** Most participants can see `manuscript.html`.
+
+**Fallback:** HTML-only participants continue normally. Give anyone with a
+blocked machine the completed project and pair them for editing.
+
+## 00:10–00:25 — Reproducible writing
+
+- Draw the source → render → output model.
+- Contrast calculation with interpretation.
+- Show the project tree and relative CSV path.
+- Run the six-minute project-map exercise.
+- Take two examples of copy-and-paste risk from the room.
+
+**Misconception to surface:** Quarto does not make a flawed analysis correct; it
+makes the recorded instructions rerunnable and reviewable.
+
+## 00:25–00:50 — Markdown
+
+- Demonstrate source and rendered output side by side.
+- Cover YAML, headings, lists, links, equations, callouts, and citations.
+- Give 15 minutes for the activity and 5 minutes for repair/review.
+
+**Checkpoint:** One participant explains why semantic headings are better than
+manually enlarged text.
+
+## 00:50–01:25 — Computation
+
+- Explain execution order and clean-session rendering.
+- Live-code one cell option, one inline value, and one cross-reference.
+- Give 25 minutes for the main activity.
+- At minute 80, ask everyone to restart R and render.
+
+**Watch for:** running lines interactively without saving them into the source;
+objects inherited from the Global Environment; missing blank lines around
+fences; duplicate cell labels.
+
+## 01:25–01:40 — Break
+
+During the break, help PDF installations only if the likely fix takes under five
+minutes. Otherwise mark participants for the HTML fallback.
+
+## 01:40–02:10 — Research publishing
+
+- Render HTML and PDF from the same source.
+- Ask pairs to identify format-specific differences.
+- Demonstrate the bundled Elsevier format from `journal-demo.qmd`.
+- Emphasise that journal instructions remain authoritative.
+
+**Fallback:** Use the pre-rendered Elsevier PDF if local LaTeX packages fail.
+Do not spend participant activity time debugging a publisher template.
+
+## 02:10–02:40 — Teaching materials
+
+- Explain the one-source/two-audience problem.
+- Show one `unilur-solution` cell and one solution div.
+- Give 22 minutes for writing and rendering.
+- Search the student HTML for the distinctive solution phrase.
+
+**Checkpoint:** The phrase occurs in the solution file and not the student file.
+
+## 02:40–02:52 — Lecture slides
+
+- Preview `slides.qmd`.
+- Show slide boundaries, incremental lists, speaker notes, and a computed figure.
+- Keep this as a demonstration; do not begin a new participant build.
+
+## 02:52–03:00 — Capstone
+
+- Ask everyone to restart R and render the manuscript and tutorial.
+- Use the capstone checklist.
+- Pair-explain how the inline sample size stays synchronised.
+- Finish with one concrete next document participants will convert.
+
+# Triage rules
+
+1. Preserve the shared pace once the setup block ends.
+2. Prefer the completed source over live debugging after five minutes.
+3. Treat PDF as a format comparison; HTML is the continuity fallback.
+4. Never ask participants to reinstall the entire toolchain during the workshop.
+5. Capture recurring errors for a later revision of the troubleshooting appendix.
+
+# After the workshop
+
+- Distribute the static book, starter, and completed archives.
+- Send the pre-rendered PDFs for accessibility and continuity.
+- Share the post-workshop competency assessment and its no-code starter task.
+- Remind participants to submit only a safe, de-identified project excerpt or
+  use the supplied task; executable code, data, and R are optional.
+- Publish the submission date, support contact, and resubmission process using
+  local learning-and-development procedures.
+- Ask one evaluation question tied to the outcome: “Could you render the
+  manuscript from a fresh R session without manual cell execution?”
+- Record the tested Quarto and R versions beside the workshop date.
